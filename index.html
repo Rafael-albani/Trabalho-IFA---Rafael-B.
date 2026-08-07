@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Água & Consciência | Análise Estatística de Recursos Hídricos</title>
+  <meta name="description" content="Site de análise estatística sobre consumo e desperdício de água no Brasil, baseado em pesquisa com 109 participantes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #fafbfc;
+      --surface: #ffffff;
+      --text: #1a1f36;
+      --text-muted: #5a6477;
+      --accent: #0ea5e9;
+      --accent-dark: #0284c7;
+      --accent-soft: #e0f2fe;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #e5e7eb;
+      --shadow: 0 4px 24px rgba(14, 165, 233, 0.08);
+      --shadow-hover: 0 12px 40px rgba(14, 165, 233, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--accent-dark);
+      background: var(--accent-soft);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat .num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+
+    .hero-stat .label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    .section-header .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+    }
+
+    /* Empty sections */
+    .empty-section {
+      background: var(--surface);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 80px 40px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-section .icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-section h3 {
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    /* ===== CARDS ===== */
+    .cards-grid {
+      display: grid;
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .card-icon.blue { background: #e0f2fe; }
+    .card-icon.green { background: #d1fae5; }
+    .card-icon.amber { background: #fef3c7; }
+    .card-icon.red { background: #fee2e2; }
+    .card-icon.purple { background: #ede9fe; }
+    .card-icon.cyan { background: #cffafe; }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .card .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-size: 0.98rem;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, #e0f2fe 0%, #bae6fd 100%);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      color: #0369a1;
+    }
+
+    .alert-box {
+      background: #fef2f2;
+      border-left: 4px solid var(--danger);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: #7f1d1d;
+    }
+
+    .info-box {
+      background: #f0f9ff;
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: #0c4a6e;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .stat-item {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-item .value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent-dark);
+      line-height: 1.2;
+    }
+
+    .stat-item .desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* Progress bars */
+    .bar-group {
+      margin: 20px 0;
+    }
+
+    .bar-item {
+      margin-bottom: 14px;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .bar-track {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bar-fill.blue { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+    .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
+    .bar-fill.amber { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+    .bar-fill.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+
+    /* Chart containers */
+    .chart-wrap {
+      position: relative;
+      max-width: 380px;
+      margin: 24px auto 8px;
+      height: 260px;
+    }
+
+    .chart-wrap.wide {
+      max-width: 100%;
+      height: 280px;
+    }
+
+    /* Two-column layout for some cards */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .split {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        display: none;
+      }
+      .hero-stats {
+        gap: 20px;
+      }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      background: var(--surface);
+    }
+
+    footer a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile menu button */
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: block;
+      }
+    }
+
+    /* Smooth reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">💧</div>
+        <span>Água & Consciência</span>
+      </a>
+      <nav>
+        <a href="#matematica" class="active">Matemática</a>
+        <a href="#quimica">Química</a>
+        <a href="#biologia">Biologia</a>
+      </nav>
+      <button class="menu-btn" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">📊 Pesquisa com 109 participantes</div>
+    <h1>Estatísticas que revelam<br>o uso da água no dia a dia</h1>
+    <p>
+      Uma análise quantitativa dos hábitos de consumo hídrico, desperdício e conscientização ambiental no Brasil — com dados reais e reflexões matemáticas.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">109</div>
+        <div class="label">Participantes</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">6</div>
+        <div class="label">Temas analisados</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">40%</div>
+        <div class="label">Água perdida na rede</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MATEMÁTICA ===================== -->
+  <section id="matematica" class="section">
+    <div class="section-header">
+      <span class="tag">Seção 01</span>
+      <h2>📐 Matemática</h2>
+      <p>Estatística descritiva e análise de dados da pesquisa sobre recursos hídricos e hábitos de consumo.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- CARD 1: Tempo de banho -->
+      <article class="card reveal">
+        <div class="card-header">
+          <div class="card-icon blue">🚿</div>
+          <div>
+            <h3>Tempo diário no chuveiro</h3>
+            <div class="subtitle">n = 109 · Recomendação OMS: ≤ 5 minutos</div>
+          </div>
+        </div>
+
+        <div class="split">
+          <div>
+            <p>
+              Constata-se um padrão preocupante de consumo hídrico residencial:
+              <span class="highlight">58,7%</span> dos entrevistados ultrapassam 10 minutos diários no chuveiro
+              (sendo <strong>33%</strong> entre 10 e 15 min e <strong>25,7%</strong> acima de 15 min),
+              enquanto apenas <span class="highlight">10,1%</span> cumprem a meta ideal de até 5 minutos recomendada pela OMS.
+            </p>
+
+            <div class="bar-group">
+              <div class="bar-item">
+                <div class="bar-label"><span>≤ 5 min (ideal)</span><span>10,1%</span></div>
+                <div class="bar-track"><div class="bar-fill green" style="width: 10.1%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-label"><span>5 – 10 min</span><span>31,2%</span></div>
+                <div class="bar-track"><div class="bar-fill blue" style="width: 31.2%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-label"><span>10 – 15 min</span><span>33,0%</span></div>
+                <div class="bar-track"><div class="bar-fill amber" style="width: 33%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-label"><span>> 15 min</span><span>25,7%</span></div>
+                <div class="bar-track"><div class="bar-fill red" style="width: 25.7%"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartBanho"></canvas>
+          </div>
+        </div>
+
+        <div class="alert-box">
+          <strong>Impacto ambiental:</strong> Um banho de 15 minutos em chuveiro elétrico consome em média <strong>135 a 180 litros</strong> de água potável limpa e tratada. Se um quarto da população mantém esse hábito diariamente, milhões de litros de água tratada são descartados precocemente na rede de esgoto, sobrecarregando reservatórios em períodos de estiagem e agravando crises hídricas regionais.
+        </div>
+      </article>
+
+      <!-- CARD 2: Perdas na rede -->
+      <article class="card reveal">
+        <div class="card-header">
+          <div class="card-icon amber">🚰</div>
+          <div>
+            <h3>Conhecimento sobre perdas na distribuição</h3>
+            <div class="subtitle">n = 109 · Cerca de 40% da água potável é perdida antes de chegar às residências</div>
+          </div>
+        </div>
+
+        <div class="split">
+          <div>
+            <p>
+              A pesquisa revela um cenário de desinformação equilibrado e preocupante sobre o saneamento no país:
+              <span class="highlight">50,5%</span> dos entrevistados desconheciam que cerca de <strong>40%</strong> da água potável produzida no Brasil é perdida em vazamentos e falhas de infraestrutura antes de chegar às residências, enquanto apenas <span class="highlight">49,5%</span> tinham conhecimento desse dado.
+            </p>
+            <div class="info-box">
+              Esse desconhecimento geral reduz a conscientização coletiva sobre o desperdício sistêmico, dificultando a pressão pública por reformas de infraestrutura e mascarando a gravidade do problema hídrico nacional, que vai muito além das economias individuais no dia a dia.
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartPerdas"></canvas>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 3: Vazamentos domésticos -->
+      <article class="card reveal">
+        <div class="card-header">
+          <div class="card-icon red">🔧</div>
+          <div>
+            <h3>Identificação e notificação de vazamentos</h3>
+            <div class="subtitle">n = 109 · Ambientes domésticos ou escolares</div>
+          </div>
+        </div>
+
+        <div class="split">
+          <div>
+            <p>
+              <span class="highlight">46,8%</span> dos entrevistados já identificaram gotejamentos ou vazamentos e notificaram o problema, demonstrando proatividade e consciência ambiental em quase metade da amostragem.
+              Por outro lado, <strong>33%</strong> afirmaram que nunca repararam e <strong>20,2%</strong> perceberam a falha, mas não avisaram — somando mais de <span class="highlight">53%</span> de potenciais pontos cegos na identificação de desperdícios.
+            </p>
+            <div class="alert-box">
+              Embora haja uma parcela engajada na manutenção hídrica, a falta de atenção ou de engajamento da maioria ainda permite que pequenos vazamentos — capazes de desperdiçar milhares de litros de água potável por mês de forma silenciosa — passem despercebidos e continuem gerando prejuízos financeiros e ambientais.
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartVazamento"></canvas>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 4: Consumo de carne -->
+      <article class="card reveal">
+        <div class="card-header">
+          <div class="card-icon purple">🥩</div>
+          <div>
+            <h3>Frequência semanal de consumo de carne bovina</h3>
+            <div class="subtitle">n = 109 · Pegada hídrica ≈ 15.000 L por kg de carne</div>
+          </div>
+        </div>
+
+        <div class="split">
+          <div>
+            <p>
+              <span class="highlight">58,7%</span> dos entrevistados mantêm um consumo frequente
+              (sendo <strong>40,4%</strong> entre 3 a 4 vezes por semana e <strong>18,3%</strong> todos os dias),
+              enquanto <strong>28,4%</strong> consomem de 1 a 2 vezes e apenas <span class="highlight">12,8%</span> afirmam comer raramente ou nunca.
+            </p>
+            <div class="info-box">
+              A pecuária bovina é uma das atividades que mais demandam água no setor agropecuário — exigindo cerca de <strong>15.000 litros</strong> para cada quilo de carne produzido. A alta adesão ao consumo frequente demonstra que grande parte da população consome indiretamente volumes massivos de recursos hídricos na sua dieta diária, muitas vezes sem associar a alimentação ao impacto hídrico global.
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartCarne"></canvas>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 5: Descarte de resíduos -->
+      <article class="card reveal">
+        <div class="card-header">
+          <div class="card-icon cyan">🧴</div>
+          <div>
+            <h3>Destinação de resíduos poluentes</h3>
+            <div class="subtitle">n = 109 · Óleo de cozinha e medicamentos vencidos</div>
+          </div>
+        </div>
+
+        <div class="split">
+          <div>
+            <p>
+              <span class="highlight">46,8%</span> dos entrevistados utilizam pontos de coleta seletiva para o descarte adequado,
+              enquanto <strong>33,9%</strong> optam pelo lixo comum e <strong>19,3%</strong> descartam diretamente no ralo da pia ou no vaso sanitário.
+              A soma das práticas inadequadas representa <span class="highlight">53,2%</span> dos entrevistados — um número alarmante para a preservação dos recursos hídricos.
+            </p>
+            <div class="alert-box">
+              Apenas <strong>1 litro de óleo</strong> despejado no esgoto pode contaminar até <strong>25 mil litros</strong> de água, além de entupir tubulações. Já o descarte de remédios no lixo ou na rede hídrica lança substâncias químicas no ecossistema que as estações convencionais de tratamento não conseguem filtrar, poluindo rios, lençóis freáticos e ameaçando a vida aquática.
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartDescarte"></canvas>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 6: Perfil alimentar -->
+      <article class="card reveal">
+        <div class="card-header">
+          <div class="card-icon green">🥗</div>
+          <div>
+            <h3>Perfil da base alimentar diária</h3>
+            <div class="subtitle">n = 109 · Dependência de proteína animal e pegada hídrica oculta</div>
+          </div>
+        </div>
+
+        <div class="split">
+          <div>
+            <p>
+              A esmagadora maioria adota dietas com presença de proteína animal:
+              <span class="highlight">76,1%</span> consideram sua alimentação equilibrada (grãos e carnes),
+              <strong>22,9%</strong> indicam uma dieta predominantemente rica em carnes (frango, boi)
+              e apenas <span class="highlight">1%</span> declara seguir uma dieta vegetariana.
+            </p>
+            <div class="info-box">
+              Sob a perspectiva da sustentabilidade e dos recursos hídricos, essa dependência generalizada de proteína animal por <strong>99%</strong> dos entrevistados representa uma expressiva “pegada hídrica oculta”, visto que a produção de alimentos de origem animal exige volumes significativamente maiores de água para o manejo do solo, cultivo de ração e criação do gado em comparação ao cultivo direto de vegetais e grãos para consumo humano.
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartDieta"></canvas>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== QUÍMICA ===================== -->
+  <section id="quimica" class="section">
+    <div class="section-header">
+      <span class="tag">Seção 02</span>
+      <h2>🧪 Química</h2>
+      <p>Conteúdo em desenvolvimento.</p>
+    </div>
+    <div class="empty-section reveal">
+      <div class="icon">🧪</div>
+      <h3>Em breve</h3>
+      <p>Esta seção será preenchida com conteúdos de Química relacionados a recursos hídricos, poluição e tratamento de água.</p>
+    </div>
+  </section>
+
+  <!-- ===================== BIOLOGIA ===================== -->
+  <section id="biologia" class="section">
+    <div class="section-header">
+      <span class="tag">Seção 03</span>
+      <h2>🧬 Biologia</h2>
+      <p>Conteúdo em desenvolvimento.</p>
+    </div>
+    <div class="empty-section reveal">
+      <div class="icon">🧬</div>
+      <h3>Em breve</h3>
+      <p>Esta seção será preenchida com conteúdos de Biologia relacionados a ecossistemas aquáticos, biodiversidade e impactos ambientais.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      Dados baseados em pesquisa com <strong>109 participantes</strong> · Site desenvolvido para fins educacionais<br />
+      Pronto para publicação no <a href="https://github.com" target="_blank" rel="noopener">GitHub Pages</a>
+    </p>
+  </footer>
+
+  <script>
+    // ===== Charts =====
+    const chartDefaults = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            padding: 16,
+            usePointStyle: true,
+            pointStyle: 'circle',
+            font: { family: 'Inter', size: 12 }
+          }
+        },
+        tooltip: {
+          backgroundColor: '#1a1f36',
+          titleFont: { family: 'Inter', size: 13 },
+          bodyFont: { family: 'Inter', size: 12 },
+          padding: 12,
+          cornerRadius: 8
+        }
+      }
+    };
+
+    // 1. Banho
+    new Chart(document.getElementById('chartBanho'), {
+      type: 'doughnut',
+      data: {
+        labels: ['≤ 5 min', '5–10 min', '10–15 min', '> 15 min'],
+        datasets: [{
+          data: [10.1, 31.2, 33.0, 25.7],
+          backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
+    });
+
+    // 2. Perdas
+    new Chart(document.getElementById('chartPerdas'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Desconheciam (50,5%)', 'Conheciam (49,5%)'],
+        datasets: [{
+          data: [50.5, 49.5],
+          backgroundColor: ['#f59e0b', '#0ea5e9'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
+    });
+
+    // 3. Vazamentos
+    new Chart(document.getElementById('chartVazamento'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Identificou e notificou', 'Nunca reparou', 'Percebeu, mas não avisou'],
+        datasets: [{
+          data: [46.8, 33.0, 20.2],
+          backgroundColor: ['#10b981', '#94a3b8', '#ef4444'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
+    });
+
+    // 4. Carne
+    new Chart(document.getElementById('chartCarne'), {
+      type: 'doughnut',
+      data: {
+        labels: ['3–4×/semana', 'Todos os dias', '1–2×/semana', 'Raramente/nunca'],
+        datasets: [{
+          data: [40.4, 18.3, 28.4, 12.8],
+          backgroundColor: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
+    });
+
+    // 5. Descarte
+    new Chart(document.getElementById('chartDescarte'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Coleta seletiva', 'Lixo comum', 'Ralo / vaso'],
+        datasets: [{
+          data: [46.8, 33.9, 19.3],
+          backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
+    });
+
+    // 6. Dieta
+    new Chart(document.getElementById('chartDieta'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Equilibrada (grãos + carnes)', 'Rica em carnes', 'Vegetariana'],
+        datasets: [{
+          data: [76.1, 22.9, 1.0],
+          backgroundColor: ['#10b981', '#f59e0b', '#34d399'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
+    });
+
+    // ===== Reveal on scroll =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ===== Active nav link =====
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 100;
+        if (scrollY >= top) current = section.getAttribute('id');
+      });
+      document.querySelectorAll('nav a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>
