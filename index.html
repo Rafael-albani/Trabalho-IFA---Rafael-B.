@@ -46,7 +46,6 @@
       min-height: 100vh;
     }
 
-    /* ===== HEADER ===== */
     header {
       position: sticky;
       top: 0;
@@ -108,7 +107,6 @@
       background: var(--accent-soft);
     }
 
-    /* ===== HERO ===== */
     .hero {
       max-width: 1200px;
       margin: 0 auto;
@@ -172,7 +170,6 @@
       font-weight: 500;
     }
 
-    /* ===== SECTIONS ===== */
     .section {
       max-width: 1200px;
       margin: 0 auto;
@@ -207,7 +204,6 @@
       max-width: 600px;
     }
 
-    /* Empty sections */
     .empty-section {
       background: var(--surface);
       border: 2px dashed var(--border);
@@ -229,7 +225,6 @@
       margin-bottom: 8px;
     }
 
-    /* ===== CARDS ===== */
     .cards-grid {
       display: grid;
       gap: 28px;
@@ -290,10 +285,6 @@
       font-size: 0.98rem;
     }
 
-    .card p:last-child {
-      margin-bottom: 0;
-    }
-
     .highlight {
       background: linear-gradient(120deg, #e0f2fe 0%, #bae6fd 100%);
       padding: 2px 8px;
@@ -322,36 +313,6 @@
       color: #0c4a6e;
     }
 
-    /* Stats row */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
-    }
-
-    .stat-item {
-      background: var(--bg);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      text-align: center;
-    }
-
-    .stat-item .value {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--accent-dark);
-      line-height: 1.2;
-    }
-
-    .stat-item .desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      font-weight: 500;
-    }
-
-    /* Progress bars */
     .bar-group {
       margin: 20px 0;
     }
@@ -385,22 +346,14 @@
     .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
     .bar-fill.amber { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
     .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
-    .bar-fill.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
 
-    /* Chart containers */
     .chart-wrap {
       position: relative;
       max-width: 380px;
       margin: 24px auto 8px;
-      height: 260px;
+      height: 300px;
     }
 
-    .chart-wrap.wide {
-      max-width: 100%;
-      height: 280px;
-    }
-
-    /* Two-column layout for some cards */
     .split {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -420,7 +373,6 @@
       }
     }
 
-    /* Footer */
     footer {
       border-top: 1px solid var(--border);
       padding: 40px 24px;
@@ -440,7 +392,6 @@
       text-decoration: underline;
     }
 
-    /* Mobile menu button */
     .menu-btn {
       display: none;
       background: none;
@@ -456,7 +407,6 @@
       }
     }
 
-    /* Smooth reveal animation */
     .reveal {
       opacity: 0;
       transform: translateY(24px);
@@ -470,7 +420,6 @@
   </style>
 </head>
 <body>
-  <!-- HEADER -->
   <header>
     <div class="nav-container">
       <a href="#" class="logo">
@@ -486,7 +435,6 @@
     </div>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">📊 Pesquisa com 109 participantes</div>
     <h1>Estatísticas que revelam<br>o uso da água no dia a dia</h1>
@@ -509,7 +457,6 @@
     </div>
   </section>
 
-  <!-- ===================== MATEMÁTICA ===================== -->
   <section id="matematica" class="section">
     <div class="section-header">
       <span class="tag">Seção 01</span>
@@ -704,7 +651,6 @@
     </div>
   </section>
 
-  <!-- ===================== QUÍMICA ===================== -->
   <section id="quimica" class="section">
     <div class="section-header">
       <span class="tag">Seção 02</span>
@@ -718,7 +664,6 @@
     </div>
   </section>
 
-  <!-- ===================== BIOLOGIA ===================== -->
   <section id="biologia" class="section">
     <div class="section-header">
       <span class="tag">Seção 03</span>
@@ -732,7 +677,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>
       Dados baseados em pesquisa com <strong>109 participantes</strong> · Site desenvolvido para fins educacionais<br />
@@ -741,18 +685,21 @@
   </footer>
 
   <script>
-    // ===== Charts =====
     const chartDefaults = {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
+          display: true,
           position: 'bottom',
           labels: {
-            padding: 16,
+            padding: 14,
             usePointStyle: true,
             pointStyle: 'circle',
-            font: { family: 'Inter', size: 12 }
+            boxWidth: 10,
+            boxHeight: 10,
+            font: { family: 'Inter', size: 12, weight: '500' },
+            color: '#1a1f36'
           }
         },
         tooltip: {
@@ -760,7 +707,12 @@
           titleFont: { family: 'Inter', size: 13 },
           bodyFont: { family: 'Inter', size: 12 },
           padding: 12,
-          cornerRadius: 8
+          cornerRadius: 8,
+          callbacks: {
+            label: function(context) {
+              return ' ' + context.label;
+            }
+          }
         }
       }
     };
@@ -769,7 +721,12 @@
     new Chart(document.getElementById('chartBanho'), {
       type: 'doughnut',
       data: {
-        labels: ['≤ 5 min', '5–10 min', '10–15 min', '> 15 min'],
+        labels: [
+          '≤ 5 min (ideal) — 10,1%',
+          '5–10 min — 31,2%',
+          '10–15 min — 33,0%',
+          '> 15 min — 25,7%'
+        ],
         datasets: [{
           data: [10.1, 31.2, 33.0, 25.7],
           backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
@@ -777,17 +734,17 @@
           hoverOffset: 8
         }]
       },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
+      options: { ...chartDefaults, cutout: '58%' }
     });
 
     // 2. Perdas
     new Chart(document.getElementById('chartPerdas'), {
       type: 'doughnut',
       data: {
-        labels: ['Desconheciam (50,5%)', 'Conheciam (49,5%)'],
+        labels: [
+          'Desconheciam — 50,5%',
+          'Conheciam — 49,5%'
+        ],
         datasets: [{
           data: [50.5, 49.5],
           backgroundColor: ['#f59e0b', '#0ea5e9'],
@@ -795,17 +752,18 @@
           hoverOffset: 8
         }]
       },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
+      options: { ...chartDefaults, cutout: '58%' }
     });
 
     // 3. Vazamentos
     new Chart(document.getElementById('chartVazamento'), {
       type: 'doughnut',
       data: {
-        labels: ['Identificou e notificou', 'Nunca reparou', 'Percebeu, mas não avisou'],
+        labels: [
+          'Identificou e notificou — 46,8%',
+          'Nunca reparou — 33,0%',
+          'Percebeu, mas não avisou — 20,2%'
+        ],
         datasets: [{
           data: [46.8, 33.0, 20.2],
           backgroundColor: ['#10b981', '#94a3b8', '#ef4444'],
@@ -813,17 +771,19 @@
           hoverOffset: 8
         }]
       },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
+      options: { ...chartDefaults, cutout: '58%' }
     });
 
     // 4. Carne
     new Chart(document.getElementById('chartCarne'), {
       type: 'doughnut',
       data: {
-        labels: ['3–4×/semana', 'Todos os dias', '1–2×/semana', 'Raramente/nunca'],
+        labels: [
+          '3–4× por semana — 40,4%',
+          'Todos os dias — 18,3%',
+          '1–2× por semana — 28,4%',
+          'Raramente ou nunca — 12,8%'
+        ],
         datasets: [{
           data: [40.4, 18.3, 28.4, 12.8],
           backgroundColor: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
@@ -831,17 +791,18 @@
           hoverOffset: 8
         }]
       },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
+      options: { ...chartDefaults, cutout: '58%' }
     });
 
     // 5. Descarte
     new Chart(document.getElementById('chartDescarte'), {
       type: 'doughnut',
       data: {
-        labels: ['Coleta seletiva', 'Lixo comum', 'Ralo / vaso'],
+        labels: [
+          'Coleta seletiva — 46,8%',
+          'Lixo comum — 33,9%',
+          'Ralo / vaso sanitário — 19,3%'
+        ],
         datasets: [{
           data: [46.8, 33.9, 19.3],
           backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'],
@@ -849,17 +810,18 @@
           hoverOffset: 8
         }]
       },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
+      options: { ...chartDefaults, cutout: '58%' }
     });
 
     // 6. Dieta
     new Chart(document.getElementById('chartDieta'), {
       type: 'doughnut',
       data: {
-        labels: ['Equilibrada (grãos + carnes)', 'Rica em carnes', 'Vegetariana'],
+        labels: [
+          'Equilibrada (grãos + carnes) — 76,1%',
+          'Rica em carnes — 22,9%',
+          'Vegetariana — 1,0%'
+        ],
         datasets: [{
           data: [76.1, 22.9, 1.0],
           backgroundColor: ['#10b981', '#f59e0b', '#34d399'],
@@ -867,13 +829,10 @@
           hoverOffset: 8
         }]
       },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
+      options: { ...chartDefaults, cutout: '58%' }
     });
 
-    // ===== Reveal on scroll =====
+    // Reveal on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -884,7 +843,7 @@
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // ===== Active nav link =====
+    // Active nav
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
       let current = '';
