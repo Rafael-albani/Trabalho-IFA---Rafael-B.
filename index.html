@@ -28,8 +28,15 @@
       --radius-sm: 10px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -39,6 +46,7 @@
       min-height: 100vh;
     }
 
+    /* ===== HEADER ===== */
     header {
       position: sticky;
       top: 0;
@@ -79,7 +87,10 @@
       font-size: 1.2rem;
     }
 
-    nav { display: flex; gap: 8px; }
+    nav {
+      display: flex;
+      gap: 8px;
+    }
 
     nav a {
       text-decoration: none;
@@ -97,6 +108,7 @@
       background: var(--accent-soft);
     }
 
+    /* ===== HERO ===== */
     .hero {
       max-width: 1200px;
       margin: 0 auto;
@@ -144,25 +156,32 @@
       flex-wrap: wrap;
     }
 
-    .hero-stat { text-align: center; }
+    .hero-stat {
+      text-align: center;
+    }
+
     .hero-stat .num {
       font-size: 2rem;
       font-weight: 800;
       color: var(--accent-dark);
     }
+
     .hero-stat .label {
       font-size: 0.85rem;
       color: var(--text-muted);
       font-weight: 500;
     }
 
+    /* ===== SECTIONS ===== */
     .section {
       max-width: 1200px;
       margin: 0 auto;
       padding: 48px 24px 64px;
     }
 
-    .section-header { margin-bottom: 40px; }
+    .section-header {
+      margin-bottom: 40px;
+    }
 
     .section-header .tag {
       display: inline-block;
@@ -188,6 +207,7 @@
       max-width: 600px;
     }
 
+    /* Empty sections */
     .empty-section {
       background: var(--surface);
       border: 2px dashed var(--border);
@@ -209,7 +229,11 @@
       margin-bottom: 8px;
     }
 
-    .cards-grid { display: grid; gap: 28px; }
+    /* ===== CARDS ===== */
+    .cards-grid {
+      display: grid;
+      gap: 28px;
+    }
 
     .card {
       background: var(--surface);
@@ -248,7 +272,6 @@
     .card-icon.red { background: #fee2e2; }
     .card-icon.purple { background: #ede9fe; }
     .card-icon.cyan { background: #cffafe; }
-    .card-icon.teal { background: #ccfbf1; }
 
     .card h3 {
       font-size: 1.25rem;
@@ -265,6 +288,10 @@
       color: var(--text-muted);
       margin-bottom: 16px;
       font-size: 0.98rem;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
     }
 
     .highlight {
@@ -295,8 +322,43 @@
       color: #0c4a6e;
     }
 
-    .bar-group { margin: 20px 0; }
-    .bar-item { margin-bottom: 14px; }
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .stat-item {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-item .value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent-dark);
+      line-height: 1.2;
+    }
+
+    .stat-item .desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* Progress bars */
+    .bar-group {
+      margin: 20px 0;
+    }
+
+    .bar-item {
+      margin-bottom: 14px;
+    }
 
     .bar-label {
       display: flex;
@@ -323,14 +385,22 @@
     .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
     .bar-fill.amber { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
     .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+    .bar-fill.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
 
+    /* Chart containers */
     .chart-wrap {
       position: relative;
       max-width: 380px;
       margin: 24px auto 8px;
-      height: 300px;
+      height: 260px;
     }
 
+    .chart-wrap.wide {
+      max-width: 100%;
+      height: 280px;
+    }
+
+    /* Two-column layout for some cards */
     .split {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -339,11 +409,18 @@
     }
 
     @media (max-width: 768px) {
-      .split { grid-template-columns: 1fr; }
-      nav { display: none; }
-      .hero-stats { gap: 20px; }
+      .split {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        display: none;
+      }
+      .hero-stats {
+        gap: 20px;
+      }
     }
 
+    /* Footer */
     footer {
       border-top: 1px solid var(--border);
       padding: 40px 24px;
@@ -359,8 +436,11 @@
       font-weight: 500;
     }
 
-    footer a:hover { text-decoration: underline; }
+    footer a:hover {
+      text-decoration: underline;
+    }
 
+    /* Mobile menu button */
     .menu-btn {
       display: none;
       background: none;
@@ -371,9 +451,12 @@
     }
 
     @media (max-width: 768px) {
-      .menu-btn { display: block; }
+      .menu-btn {
+        display: block;
+      }
     }
 
+    /* Smooth reveal animation */
     .reveal {
       opacity: 0;
       transform: translateY(24px);
@@ -384,224 +467,10 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* ===== BIOLOGIA / ETA STYLES ===== */
-    .flow-diagram {
-      background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
-      border: 1px solid #bae6fd;
-      border-radius: var(--radius);
-      padding: 32px 20px;
-      margin: 24px 0 32px;
-      overflow-x: auto;
-    }
-
-    .flow-title {
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #0c4a6e;
-      margin-bottom: 28px;
-    }
-
-    .flow-steps {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      align-items: stretch;
-    }
-
-    .flow-step {
-      background: white;
-      border-radius: 12px;
-      padding: 16px 14px;
-      min-width: 130px;
-      max-width: 150px;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
-      border: 1px solid #e0f2fe;
-      position: relative;
-      transition: transform 0.2s ease;
-    }
-
-    .flow-step:hover {
-      transform: translateY(-3px);
-    }
-
-    .flow-step .num {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      color: white;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin: 0 auto 10px;
-    }
-
-    .flow-step .icon {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-    }
-
-    .flow-step .label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #0c4a6e;
-      line-height: 1.3;
-    }
-
-    .flow-arrow {
-      display: flex;
-      align-items: center;
-      color: #0ea5e9;
-      font-size: 1.4rem;
-      font-weight: 700;
-      padding: 0 2px;
-    }
-
-    @media (max-width: 900px) {
-      .flow-arrow { display: none; }
-      .flow-step { min-width: 110px; max-width: 130px; }
-    }
-
-    .step-detail {
-      margin-bottom: 28px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .step-detail:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .step-detail h4 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .step-detail h4 .badge {
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 999px;
-    }
-
-    .step-detail ul {
-      margin-left: 20px;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .step-detail ul li {
-      margin-bottom: 8px;
-    }
-
-    .challenges-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 16px;
-      font-size: 0.92rem;
-    }
-
-    .challenges-table th {
-      background: #0c4a6e;
-      color: white;
-      text-align: left;
-      padding: 12px 16px;
-      font-weight: 600;
-    }
-
-    .challenges-table th:first-child { border-radius: 10px 0 0 0; }
-    .challenges-table th:last-child { border-radius: 0 10px 0 0; }
-
-    .challenges-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-muted);
-      vertical-align: top;
-    }
-
-    .challenges-table tr:nth-child(even) td {
-      background: #f8fafc;
-    }
-
-    .challenges-table tr:last-child td:first-child {
-      border-radius: 0 0 0 10px;
-    }
-    .challenges-table tr:last-child td:last-child {
-      border-radius: 0 0 10px 0;
-    }
-
-    .standards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .standard-card {
-      background: var(--bg);
-      border-radius: var(--radius-sm);
-      padding: 18px;
-      text-align: center;
-      border: 1px solid var(--border);
-    }
-
-    .standard-card .value {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--accent-dark);
-      margin-bottom: 4px;
-    }
-
-    .standard-card .name {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .standard-card .desc {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .conclusion-box {
-      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-      border: 1px solid #a7f3d0;
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-top: 24px;
-      color: #065f46;
-      font-size: 0.98rem;
-    }
-
-    .conclusion-box strong {
-      color: #047857;
-    }
-
-    .formula {
-      font-family: 'Inter', monospace;
-      background: #f1f5f9;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.9em;
-    }
   </style>
 </head>
 <body>
+  <!-- HEADER -->
   <header>
     <div class="nav-container">
       <a href="#" class="logo">
@@ -617,6 +486,7 @@
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">📊 Pesquisa com 109 participantes</div>
     <h1>Estatísticas que revelam<br>o uso da água no dia a dia</h1>
@@ -649,6 +519,7 @@
 
     <div class="cards-grid">
 
+      <!-- CARD 1: Tempo de banho -->
       <article class="card reveal">
         <div class="card-header">
           <div class="card-icon blue">🚿</div>
@@ -657,6 +528,7 @@
             <div class="subtitle">n = 109 · Recomendação OMS: ≤ 5 minutos</div>
           </div>
         </div>
+
         <div class="split">
           <div>
             <p>
@@ -665,6 +537,7 @@
               (sendo <strong>33%</strong> entre 10 e 15 min e <strong>25,7%</strong> acima de 15 min),
               enquanto apenas <span class="highlight">10,1%</span> cumprem a meta ideal de até 5 minutos recomendada pela OMS.
             </p>
+
             <div class="bar-group">
               <div class="bar-item">
                 <div class="bar-label"><span>≤ 5 min (ideal)</span><span>10,1%</span></div>
@@ -688,11 +561,13 @@
             <canvas id="chartBanho"></canvas>
           </div>
         </div>
+
         <div class="alert-box">
           <strong>Impacto ambiental:</strong> Um banho de 15 minutos em chuveiro elétrico consome em média <strong>135 a 180 litros</strong> de água potável limpa e tratada. Se um quarto da população mantém esse hábito diariamente, milhões de litros de água tratada são descartados precocemente na rede de esgoto, sobrecarregando reservatórios em períodos de estiagem e agravando crises hídricas regionais.
         </div>
       </article>
 
+      <!-- CARD 2: Perdas na rede -->
       <article class="card reveal">
         <div class="card-header">
           <div class="card-icon amber">🚰</div>
@@ -701,6 +576,7 @@
             <div class="subtitle">n = 109 · Cerca de 40% da água potável é perdida antes de chegar às residências</div>
           </div>
         </div>
+
         <div class="split">
           <div>
             <p>
@@ -717,6 +593,7 @@
         </div>
       </article>
 
+      <!-- CARD 3: Vazamentos domésticos -->
       <article class="card reveal">
         <div class="card-header">
           <div class="card-icon red">🔧</div>
@@ -725,6 +602,7 @@
             <div class="subtitle">n = 109 · Ambientes domésticos ou escolares</div>
           </div>
         </div>
+
         <div class="split">
           <div>
             <p>
@@ -741,6 +619,7 @@
         </div>
       </article>
 
+      <!-- CARD 4: Consumo de carne -->
       <article class="card reveal">
         <div class="card-header">
           <div class="card-icon purple">🥩</div>
@@ -749,6 +628,7 @@
             <div class="subtitle">n = 109 · Pegada hídrica ≈ 15.000 L por kg de carne</div>
           </div>
         </div>
+
         <div class="split">
           <div>
             <p>
@@ -766,6 +646,7 @@
         </div>
       </article>
 
+      <!-- CARD 5: Descarte de resíduos -->
       <article class="card reveal">
         <div class="card-header">
           <div class="card-icon cyan">🧴</div>
@@ -774,6 +655,7 @@
             <div class="subtitle">n = 109 · Óleo de cozinha e medicamentos vencidos</div>
           </div>
         </div>
+
         <div class="split">
           <div>
             <p>
@@ -791,6 +673,7 @@
         </div>
       </article>
 
+      <!-- CARD 6: Perfil alimentar -->
       <article class="card reveal">
         <div class="card-header">
           <div class="card-icon green">🥗</div>
@@ -799,6 +682,7 @@
             <div class="subtitle">n = 109 · Dependência de proteína animal e pegada hídrica oculta</div>
           </div>
         </div>
+
         <div class="split">
           <div>
             <p>
@@ -839,220 +723,16 @@
     <div class="section-header">
       <span class="tag">Seção 03</span>
       <h2>🧬 Biologia</h2>
-      <p>Estações de Tratamento de Água (ETA): tecnologias, etapas e desafios da potabilização.</p>
+      <p>Conteúdo em desenvolvimento.</p>
     </div>
-
-    <div class="cards-grid">
-
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon teal">🚰</div>
-          <div>
-            <h3>Estações de Tratamento de Água (ETA)</h3>
-            <div class="subtitle">Tecnologias, etapas e desafios da potabilização</div>
-          </div>
-        </div>
-        <p>
-          A água encontrada na natureza em rios, lagos, represas ou aquíferos subterrâneos raramente está pronta para o consumo humano direto. Ela carrega microrganismos patogênicos, matéria orgânica, sedimentos e substâncias químicas que representam riscos graves à saúde pública.
-        </p>
-        <p>
-          Uma <strong>Estação de Tratamento de Água (ETA)</strong> é o complexo industrial responsável por transformar essa água bruta em água potável, garantindo que ela atenda aos rígidos padrões de potabilidade vigentes na legislação nacional (como a <strong>Portaria GM/MS nº 888</strong> do Ministério da Saúde).
-        </p>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon blue">🔬</div>
-          <div>
-            <h3>O Passo a Passo do Tratamento nas ETAs Convencionais</h3>
-            <div class="subtitle">Processo físico-químico em 7 etapas rigorosamente controladas</div>
-          </div>
-        </div>
-
-        <div class="flow-diagram">
-          <div class="flow-title">🔄 Fluxograma do Tratamento de Água</div>
-          <div class="flow-steps">
-            <div class="flow-step">
-              <div class="num">1</div>
-              <div class="icon">🏞️</div>
-              <div class="label">Captação e Gradeamento</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="num">2</div>
-              <div class="icon">⚗️</div>
-              <div class="label">Coagulação<br>(Al₂(SO₄)₃)</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="num">3</div>
-              <div class="icon">🌀</div>
-              <div class="label">Floculação<br>(Mistura Lenta)</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="num">4</div>
-              <div class="icon">⬇️</div>
-              <div class="label">Decantação<br>/ Flotação</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="num">5</div>
-              <div class="icon">🧱</div>
-              <div class="label">Filtração<br>(Areia + Antracito)</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="num">6</div>
-              <div class="icon">🧴</div>
-              <div class="label">Desinfecção<br>(Cloro) + Flúor</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="num">7</div>
-              <div class="icon">⚖️</div>
-              <div class="label">Correção<br>de pH</div>
-            </div>
-          </div>
-          <p style="text-align:center; margin-top:20px; font-size:0.85rem; color:#0369a1; font-weight:600;">
-            [Água Bruta] → → → [Água Potável para Distribuição]
-          </p>
-        </div>
-
-        <div class="step-detail">
-          <h4><span class="badge">1</span> Captação e Gradeamento</h4>
-          <ul>
-            <li><strong>Captação:</strong> A água é retirada do manancial (superficial ou subterrâneo) por meio de conjuntos motobombas e direcionada à ETA.</li>
-            <li><strong>Gradeamento e Desarenamento:</strong> A água passa por grades de diferentes aberturas e caixas de areia para reter resíduos sólidos grosseiros (galhos, folhas, plásticos e pedras), protegendo os equipamentos da estação contra desgastes e entupimentos.</li>
-          </ul>
-        </div>
-
-        <div class="step-detail">
-          <h4><span class="badge">2</span> Coagulação</h4>
-          <ul>
-            <li><strong>Adição de Reagentes:</strong> Adiciona-se um agente coagulante à água bruta — frequentemente o sulfato de alumínio <span class="formula">Al₂(SO₄)₃</span> ou cloreto férrico <span class="formula">FeCl₃</span>.</li>
-            <li><strong>Desestabilização de Cargas:</strong> As partículas de sujeira suspensas possuem carga elétrica negativa e se repelem. O coagulante neutraliza essas cargas por meio de uma mistura rápida e intensa (em canaletas como a Calha Parshall), permitindo que as impurezas voltem a se atrair.</li>
-          </ul>
-        </div>
-
-        <div class="step-detail">
-          <h4><span class="badge">3</span> Floculação</h4>
-          <ul>
-            <li><strong>Agitação Lenta:</strong> A água segue para tanques dotados de agitadores mecânicos que giram em velocidade reduzida.</li>
-            <li><strong>Formação de Flocos:</strong> Essa agitação suave faz com que as partículas coloidais desestabilizadas colidam umas com as outras, aglomerando-se e formando “flocos” visíveis, mais densos e pesados.</li>
-          </ul>
-        </div>
-
-        <div class="step-detail">
-          <h4><span class="badge">4</span> Decantação ou Flotação</h4>
-          <ul>
-            <li><strong>Decantação:</strong> Em tanques de sedimentação, a água flui em velocidade muito baixa. Pela ação da gravidade, os flocos mais pesados depositam-se no fundo do tanque, formando um lodo que é posteriormente removido.</li>
-            <li><strong>Flotação por Ar Dissolvido (FAD):</strong> Utilizada em águas com alta concentração de algas ou baixa turbidez. Bolhas microparticuladas de ar são injetadas no fundo do tanque, aderindo aos flocos e fazendo-os flutuar para serem raspados na superfície.</li>
-          </ul>
-        </div>
-
-        <div class="step-detail">
-          <h4><span class="badge">5</span> Filtração</h4>
-          <ul>
-            <li>A água que sai da decantação passa por filtros compostos por camadas sobrepostas de <strong>carvão antracito</strong>, <strong>areia</strong> de diferentes granulometrias e <strong>cascalho</strong>.</li>
-            <li><strong>Retenção Final:</strong> Essa camada porosa retém os flocos menores e impurezas restantes que não afundaram na etapa anterior, além de reduzir a turbidez da água a níveis mínimos.</li>
-          </ul>
-        </div>
-
-        <div class="step-detail">
-          <h4><span class="badge">6</span> Desinfecção, Fluoretação e Correção de pH</h4>
-          <ul>
-            <li><strong>Desinfecção (Cloração):</strong> Adiciona-se cloro (gasoso ou hipoclorito de sódio) para eliminar bactérias, vírus e protozoários causadores de doenças como cólera, febre tifoide e hepatite A. Mantém-se um teor residual de cloro para proteger a água ao longo de toda a rede de distribuição.</li>
-            <li><strong>Fluoretação:</strong> Adição de fluossilicato de sódio ou ácido fluossilícico para auxiliar na prevenção da cárie dentária na população, conforme determinação legal.</li>
-            <li><strong>Correção de pH:</strong> Aplicação de cal hidratada ou hidróxido de sódio para ajustar o pH da água. Evita corrosão das tubulações (água ácida) ou incrustações (água alcalina demais).</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon amber">⚡</div>
-          <div>
-            <h3>Os Principais Desafios Contemporâneos das ETAs</h3>
-            <div class="subtitle">Causas-raiz e consequências para o tratamento</div>
-          </div>
-        </div>
-
-        <div style="overflow-x:auto;">
-          <table class="challenges-table">
-            <thead>
-              <tr>
-                <th>Desafio</th>
-                <th>Causa Raiz</th>
-                <th>Consequência para a ETA</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Degradação dos Mananciais</strong></td>
-                <td>Descarte inadequado de esgoto in natura, defensivos agrícolas e resíduos industriais.</td>
-                <td>Necessidade de maior dosagem de insumos químicos e tecnologias avançadas de tratamento.</td>
-              </tr>
-              <tr>
-                <td><strong>Poluentes Emergentes</strong></td>
-                <td>Resíduos de medicamentos, microplásticos e óleos despejados na rede.</td>
-                <td>Substâncias que não são totalmente removidas em tratamentos convencionais, exigindo carvão ativado ou membranas.</td>
-              </tr>
-              <tr>
-                <td><strong>Gargalo na Distribuição</strong></td>
-                <td>Redes de tubulação antigas com alto índice de vazamentos.</td>
-                <td>Cerca de <strong>40%</strong> da água potável que sai da ETA é perdida antes de chegar às residências.</td>
-              </tr>
-              <tr>
-                <td><strong>Custo Energético e Químico</strong></td>
-                <td>Alto consumo de energia em bombas e elevação dos preços dos reagentes.</td>
-                <td>Aumento nos custos operacionais das companhias de saneamento, impactando as tarifas.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon green">📊</div>
-          <div>
-            <h3>Síntese dos Padrões de Qualidade</h3>
-            <div class="subtitle">Limites estritos de monitoramento contínuo para liberação ao consumo público</div>
-          </div>
-        </div>
-
-        <div class="standards-grid">
-          <div class="standard-card">
-            <div class="value">&lt; 0,5 uT</div>
-            <div class="name">Turbidez</div>
-            <div class="desc">Idealmente abaixo de 0,5 Unidades de Turbidez</div>
-          </div>
-          <div class="standard-card">
-            <div class="value">6,0 – 9,5</div>
-            <div class="name">pH</div>
-            <div class="desc">Faixa ideal para evitar corrosão e incrustações</div>
-          </div>
-          <div class="standard-card">
-            <div class="value">0,2 – 2,0 mg/L</div>
-            <div class="name">Cloro Residual Livre</div>
-            <div class="desc">Em qualquer ponto da rede de distribuição</div>
-          </div>
-          <div class="standard-card">
-            <div class="value">Ausência</div>
-            <div class="name">Coliformes / E. coli</div>
-            <div class="desc">Ausência total em 100 mL de amostra</div>
-          </div>
-        </div>
-
-        <div class="conclusion-box">
-          <strong>Conclusão:</strong> As Estações de Tratamento de Água funcionam como verdadeiras barreiras biológicas e químicas de proteção à população. Preservar os mananciais e combater os vazamentos nas redes de distribuição são passos cruciais para que o esforço tecnológico e financeiro investido dentro das ETAs não seja desperdiçado.
-        </div>
-      </article>
-
+    <div class="empty-section reveal">
+      <div class="icon">🧬</div>
+      <h3>Em breve</h3>
+      <p>Esta seção será preenchida com conteúdos de Biologia relacionados a ecossistemas aquáticos, biodiversidade e impactos ambientais.</p>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
     <p>
       Dados baseados em pesquisa com <strong>109 participantes</strong> · Site desenvolvido para fins educacionais<br />
@@ -1061,21 +741,18 @@
   </footer>
 
   <script>
+    // ===== Charts =====
     const chartDefaults = {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: true,
           position: 'bottom',
           labels: {
-            padding: 14,
+            padding: 16,
             usePointStyle: true,
             pointStyle: 'circle',
-            boxWidth: 10,
-            boxHeight: 10,
-            font: { family: 'Inter', size: 12, weight: '500' },
-            color: '#1a1f36'
+            font: { family: 'Inter', size: 12 }
           }
         },
         tooltip: {
@@ -1083,78 +760,131 @@
           titleFont: { family: 'Inter', size: 13 },
           bodyFont: { family: 'Inter', size: 12 },
           padding: 12,
-          cornerRadius: 8,
-          callbacks: {
-            label: function(context) {
-              return ' ' + context.label;
-            }
-          }
+          cornerRadius: 8
         }
       }
     };
 
+    // 1. Banho
     new Chart(document.getElementById('chartBanho'), {
       type: 'doughnut',
       data: {
-        labels: ['≤ 5 min (ideal) — 10,1%', '5–10 min — 31,2%', '10–15 min — 33,0%', '> 15 min — 25,7%'],
-        datasets: [{ data: [10.1, 31.2, 33.0, 25.7], backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'], borderWidth: 0, hoverOffset: 8 }]
+        labels: ['≤ 5 min', '5–10 min', '10–15 min', '> 15 min'],
+        datasets: [{
+          data: [10.1, 31.2, 33.0, 25.7],
+          backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
       },
-      options: { ...chartDefaults, cutout: '58%' }
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
     });
 
+    // 2. Perdas
     new Chart(document.getElementById('chartPerdas'), {
       type: 'doughnut',
       data: {
-        labels: ['Desconheciam — 50,5%', 'Conheciam — 49,5%'],
-        datasets: [{ data: [50.5, 49.5], backgroundColor: ['#f59e0b', '#0ea5e9'], borderWidth: 0, hoverOffset: 8 }]
+        labels: ['Desconheciam (50,5%)', 'Conheciam (49,5%)'],
+        datasets: [{
+          data: [50.5, 49.5],
+          backgroundColor: ['#f59e0b', '#0ea5e9'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
       },
-      options: { ...chartDefaults, cutout: '58%' }
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
     });
 
+    // 3. Vazamentos
     new Chart(document.getElementById('chartVazamento'), {
       type: 'doughnut',
       data: {
-        labels: ['Identificou e notificou — 46,8%', 'Nunca reparou — 33,0%', 'Percebeu, mas não avisou — 20,2%'],
-        datasets: [{ data: [46.8, 33.0, 20.2], backgroundColor: ['#10b981', '#94a3b8', '#ef4444'], borderWidth: 0, hoverOffset: 8 }]
+        labels: ['Identificou e notificou', 'Nunca reparou', 'Percebeu, mas não avisou'],
+        datasets: [{
+          data: [46.8, 33.0, 20.2],
+          backgroundColor: ['#10b981', '#94a3b8', '#ef4444'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
       },
-      options: { ...chartDefaults, cutout: '58%' }
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
     });
 
+    // 4. Carne
     new Chart(document.getElementById('chartCarne'), {
       type: 'doughnut',
       data: {
-        labels: ['3–4× por semana — 40,4%', 'Todos os dias — 18,3%', '1–2× por semana — 28,4%', 'Raramente ou nunca — 12,8%'],
-        datasets: [{ data: [40.4, 18.3, 28.4, 12.8], backgroundColor: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'], borderWidth: 0, hoverOffset: 8 }]
+        labels: ['3–4×/semana', 'Todos os dias', '1–2×/semana', 'Raramente/nunca'],
+        datasets: [{
+          data: [40.4, 18.3, 28.4, 12.8],
+          backgroundColor: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
       },
-      options: { ...chartDefaults, cutout: '58%' }
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
     });
 
+    // 5. Descarte
     new Chart(document.getElementById('chartDescarte'), {
       type: 'doughnut',
       data: {
-        labels: ['Coleta seletiva — 46,8%', 'Lixo comum — 33,9%', 'Ralo / vaso sanitário — 19,3%'],
-        datasets: [{ data: [46.8, 33.9, 19.3], backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'], borderWidth: 0, hoverOffset: 8 }]
+        labels: ['Coleta seletiva', 'Lixo comum', 'Ralo / vaso'],
+        datasets: [{
+          data: [46.8, 33.9, 19.3],
+          backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
       },
-      options: { ...chartDefaults, cutout: '58%' }
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
     });
 
+    // 6. Dieta
     new Chart(document.getElementById('chartDieta'), {
       type: 'doughnut',
       data: {
-        labels: ['Equilibrada (grãos + carnes) — 76,1%', 'Rica em carnes — 22,9%', 'Vegetariana — 1,0%'],
-        datasets: [{ data: [76.1, 22.9, 1.0], backgroundColor: ['#10b981', '#f59e0b', '#34d399'], borderWidth: 0, hoverOffset: 8 }]
+        labels: ['Equilibrada (grãos + carnes)', 'Rica em carnes', 'Vegetariana'],
+        datasets: [{
+          data: [76.1, 22.9, 1.0],
+          backgroundColor: ['#10b981', '#f59e0b', '#34d399'],
+          borderWidth: 0,
+          hoverOffset: 8
+        }]
       },
-      options: { ...chartDefaults, cutout: '58%' }
+      options: {
+        ...chartDefaults,
+        cutout: '62%'
+      }
     });
 
+    // ===== Reveal on scroll =====
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
       });
     }, { threshold: 0.12 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+    // ===== Active nav link =====
     const sections = document.querySelectorAll('section[id]');
     window.addEventListener('scroll', () => {
       let current = '';
