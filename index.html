@@ -1,901 +1,422 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Água & Consciência | Análise Estatística de Recursos Hídricos</title>
-  <meta name="description" content="Site de análise estatística sobre consumo e desperdício de água no Brasil, baseado em pesquisa com 109 participantes." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <style>
-    :root {
-      --bg: #fafbfc;
-      --surface: #ffffff;
-      --text: #1a1f36;
-      --text-muted: #5a6477;
-      --accent: #0ea5e9;
-      --accent-dark: #0284c7;
-      --accent-soft: #e0f2fe;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --border: #e5e7eb;
-      --shadow: 0 4px 24px rgba(14, 165, 233, 0.08);
-      --shadow-hover: 0 12px 40px rgba(14, 165, 233, 0.15);
-      --radius: 16px;
-      --radius-sm: 10px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-      min-height: 100vh;
-    }
-
-    /* ===== HEADER ===== */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 68px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 700;
-      font-size: 1.15rem;
-    }
-
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #0ea5e9, #06b6d4);
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 1.2rem;
-    }
-
-    nav {
-      display: flex;
-      gap: 8px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 0.95rem;
-      padding: 8px 16px;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
-
-    nav a:hover,
-    nav a.active {
-      color: var(--accent-dark);
-      background: var(--accent-soft);
-    }
-
-    /* ===== HERO ===== */
-    .hero {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 64px 24px 48px;
-      text-align: center;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 640px;
-      margin: 0 auto 32px;
-    }
-
-    .hero-stats {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-
-    .hero-stat {
-      text-align: center;
-    }
-
-    .hero-stat .num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--accent-dark);
-    }
-
-    .hero-stat .label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* ===== SECTIONS ===== */
-    .section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 48px 24px 64px;
-    }
-
-    .section-header {
-      margin-bottom: 40px;
-    }
-
-    .section-header .tag {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .section-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .section-header p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 600px;
-    }
-
-    /* Empty sections */
-    .empty-section {
-      background: var(--surface);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      padding: 80px 40px;
-      text-align: center;
-      color: var(--text-muted);
-    }
-
-    .empty-section .icon {
-      font-size: 3rem;
-      margin-bottom: 16px;
-      opacity: 0.5;
-    }
-
-    .empty-section h3 {
-      font-size: 1.3rem;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    /* ===== CARDS ===== */
-    .cards-grid {
-      display: grid;
-      gap: 28px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: var(--shadow);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      font-size: 1.5rem;
-      flex-shrink: 0;
-    }
-
-    .card-icon.blue { background: #e0f2fe; }
-    .card-icon.green { background: #d1fae5; }
-    .card-icon.amber { background: #fef3c7; }
-    .card-icon.red { background: #fee2e2; }
-    .card-icon.purple { background: #ede9fe; }
-    .card-icon.cyan { background: #cffafe; }
-
-    .card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .card .subtitle {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .card p {
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      font-size: 0.98rem;
-    }
-
-    .card p:last-child {
-      margin-bottom: 0;
-    }
-
-    .highlight {
-      background: linear-gradient(120deg, #e0f2fe 0%, #bae6fd 100%);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-      color: #0369a1;
-    }
-
-    .alert-box {
-      background: #fef2f2;
-      border-left: 4px solid var(--danger);
-      padding: 16px 20px;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin-top: 16px;
-      font-size: 0.95rem;
-      color: #7f1d1d;
-    }
-
-    .info-box {
-      background: #f0f9ff;
-      border-left: 4px solid var(--accent);
-      padding: 16px 20px;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin-top: 16px;
-      font-size: 0.95rem;
-      color: #0c4a6e;
-    }
-
-    /* Stats row */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
-    }
-
-    .stat-item {
-      background: var(--bg);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      text-align: center;
-    }
-
-    .stat-item .value {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--accent-dark);
-      line-height: 1.2;
-    }
-
-    .stat-item .desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      font-weight: 500;
-    }
-
-    /* Progress bars */
-    .bar-group {
-      margin: 20px 0;
-    }
-
-    .bar-item {
-      margin-bottom: 14px;
-    }
-
-    .bar-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
-
-    .bar-track {
-      height: 10px;
-      background: #e5e7eb;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .bar-fill.blue { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
-    .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
-    .bar-fill.amber { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-    .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
-    .bar-fill.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
-
-    /* Chart containers */
-    .chart-wrap {
-      position: relative;
-      max-width: 380px;
-      margin: 24px auto 8px;
-      height: 260px;
-    }
-
-    .chart-wrap.wide {
-      max-width: 100%;
-      height: 280px;
-    }
-
-    /* Two-column layout for some cards */
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .split {
-        grid-template-columns: 1fr;
-      }
-      nav {
-        display: none;
-      }
-      .hero-stats {
-        gap: 20px;
-      }
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 24px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      background: var(--surface);
-    }
-
-    footer a {
-      color: var(--accent-dark);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Mobile menu button */
-    .menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--text);
-    }
-
-    @media (max-width: 768px) {
-      .menu-btn {
-        display: block;
-      }
-    }
-
-    /* Smooth reveal animation */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Água & Consciência | Matemática • Química • Biologia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#fafbfc;--surface:#fff;--text:#1a1f36;--muted:#5a6477;--accent:#0ea5e9;--accent-d:#0284c7;--soft:#e0f2fe;--ok:#10b981;--warn:#f59e0b;--bad:#ef4444;--border:#e5e7eb;--shadow:0 4px 24px rgba(14,165,233,.08);--radius:16px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav{max-width:1200px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;font-size:1.15rem}
+.logo span{width:36px;height:36px;background:linear-gradient(135deg,#0ea5e9,#06b6d4);border-radius:10px;display:grid;place-items:center;color:#fff}
+nav{display:flex;gap:6px}nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem;padding:8px 14px;border-radius:8px;transition:.2s}nav a:hover,nav a.active{color:var(--accent-d);background:var(--soft)}
+.hero{max-width:1200px;margin:0 auto;padding:56px 24px 40px;text-align:center}
+.badge{display:inline-block;background:var(--soft);color:var(--accent-d);font-size:.85rem;font-weight:600;padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.2;margin-bottom:14px;background:linear-gradient(135deg,#0c4a6e,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);max-width:620px;margin:0 auto 28px;font-size:1.1rem}
+.stats{display:flex;justify-content:center;gap:36px;flex-wrap:wrap}.stats div{text-align:center}.stats b{display:block;font-size:1.9rem;font-weight:800;color:var(--accent-d)}.stats span{font-size:.85rem;color:var(--muted)}
+section{max-width:1200px;margin:0 auto;padding:48px 24px}
+.sec-head{margin-bottom:36px}.sec-head .tag{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}.sec-head h2{font-family:'Playfair Display',serif;font-size:1.9rem;margin:6px 0 8px}.sec-head p{color:var(--muted)}
+.grid{display:grid;gap:26px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);transition:.25s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(14,165,233,.12)}
+.card-h{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.icon{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.4rem;flex-shrink:0}
+.icon.b{background:#e0f2fe}.icon.g{background:#d1fae5}.icon.a{background:#fef3c7}.icon.r{background:#fee2e2}.icon.p{background:#ede9fe}.icon.c{background:#cffafe}.icon.t{background:#ccfbf1}
+.card h3{font-size:1.2rem;font-weight:700}.card .sub{font-size:.88rem;color:var(--muted)}
+.card p{color:var(--muted);margin-bottom:12px;font-size:.97rem}
+.hl{background:linear-gradient(120deg,#e0f2fe,#bae6fd);padding:2px 7px;border-radius:4px;font-weight:600;color:#0369a1}
+.alert{background:#fef2f2;border-left:4px solid var(--bad);padding:14px 16px;border-radius:0 10px 10px 0;margin-top:14px;font-size:.93rem;color:#7f1d1d}
+.info{background:#f0f9ff;border-left:4px solid var(--accent);padding:14px 16px;border-radius:0 10px 10px 0;margin-top:14px;font-size:.93rem;color:#0c4a6e}
+.save{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.91rem;color:#14532d}
+.save strong{color:#166534}
+.impact{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.91rem;color:#1e3a8a}
+.impact strong{color:#1e40af}
+.bars{margin:16px 0}.bar{margin-bottom:12px}.bar-l{display:flex;justify-content:space-between;font-size:.88rem;margin-bottom:5px;font-weight:500}
+.track{height:9px;background:#e5e7eb;border-radius:999px;overflow:hidden}.fill{height:100%;border-radius:999px}
+.fill.g{background:linear-gradient(90deg,#10b981,#34d399)}.fill.b{background:linear-gradient(90deg,#0ea5e9,#38bdf8)}.fill.a{background:linear-gradient(90deg,#f59e0b,#fbbf24)}.fill.r{background:linear-gradient(90deg,#ef4444,#f87171)}
+.chart{max-width:360px;height:270px;margin:20px auto 0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+@media(max-width:768px){.split{grid-template-columns:1fr}nav{display:none}}
+.empty{background:var(--surface);border:2px dashed var(--border);border-radius:var(--radius);padding:70px 30px;text-align:center;color:var(--muted)}.empty .big{font-size:2.8rem;opacity:.5;margin-bottom:12px}
+.step{display:grid;grid-template-columns:80px 1fr;gap:18px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none;margin-bottom:0}
+.step-vis{background:linear-gradient(145deg,#e0f2fe,#bae6fd);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;text-align:center}
+.step-vis .n{width:28px;height:28px;background:var(--accent-d);color:#fff;border-radius:50%;font-size:.75rem;font-weight:700;display:grid;place-items:center;margin-bottom:6px}
+.step-vis .em{font-size:1.8rem;margin-bottom:4px}
+.step-vis .lb{font-size:.68rem;font-weight:600;color:#0c4a6e;line-height:1.2}
+.step h4{font-size:1.08rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.step h4 .bd{background:var(--soft);color:var(--accent-d);font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:999px}
+.step ul{margin-left:18px;color:var(--muted);font-size:.94rem}.step li{margin-bottom:6px}
+.flow{background:linear-gradient(180deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:var(--radius);padding:28px 16px;margin:20px 0 28px;overflow-x:auto}
+.flow-t{text-align:center;font-weight:700;color:#0c4a6e;margin-bottom:22px}
+.flow-s{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;align-items:stretch}
+.fs{background:#fff;border-radius:12px;padding:14px 12px;min-width:115px;max-width:135px;text-align:center;box-shadow:0 2px 10px rgba(14,165,233,.1);border:1px solid #e0f2fe}
+.fs .n{width:26px;height:26px;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-radius:50%;font-size:.75rem;font-weight:700;display:grid;place-items:center;margin:0 auto 8px}
+.fs .em{font-size:1.5rem;margin-bottom:6px}.fs .lb{font-size:.72rem;font-weight:600;color:#0c4a6e;line-height:1.25}
+.arr{display:flex;align-items:center;color:#0ea5e9;font-size:1.3rem;font-weight:700}
+@media(max-width:900px){.arr{display:none}}
+.tbl{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:12px}
+.tbl th{background:#0c4a6e;color:#fff;text-align:left;padding:11px 14px}.tbl th:first-child{border-radius:10px 0 0 0}.tbl th:last-child{border-radius:0 10px 0 0}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#f8fafc}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:14px}
+.sc{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sc .v{font-size:1.25rem;font-weight:800;color:var(--accent-d)}.sc .n{font-size:.84rem;font-weight:600;margin:4px 0}.sc .d{font-size:.76rem;color:var(--muted)}
+.conc{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #a7f3d0;border-radius:var(--radius);padding:20px;margin-top:20px;color:#065f46;font-size:.95rem}
+footer{border-top:1px solid var(--border);padding:36px 24px;text-align:center;color:var(--muted);font-size:.9rem;background:var(--surface)}
+footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s,transform .55s}.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="logo">
-        <div class="logo-icon">💧</div>
-        <span>Água & Consciência</span>
-      </a>
-      <nav>
-        <a href="#matematica" class="active">Matemática</a>
-        <a href="#quimica">Química</a>
-        <a href="#biologia">Biologia</a>
-      </nav>
-      <button class="menu-btn" aria-label="Menu">☰</button>
-    </div>
-  </header>
+<header>
+<div class="nav">
+<a href="#" class="logo"><span>💧</span> Água & Consciência</a>
+<nav>
+<a href="#matematica" class="active">Matemática</a>
+<a href="#quimica">Química</a>
+<a href="#biologia">Biologia</a>
+</nav>
+</div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-badge">📊 Pesquisa com 109 participantes</div>
-    <h1>Estatísticas que revelam<br>o uso da água no dia a dia</h1>
-    <p>
-      Uma análise quantitativa dos hábitos de consumo hídrico, desperdício e conscientização ambiental no Brasil — com dados reais e reflexões matemáticas.
-    </p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="num">109</div>
-        <div class="label">Participantes</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">6</div>
-        <div class="label">Temas analisados</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">40%</div>
-        <div class="label">Água perdida na rede</div>
-      </div>
-    </div>
-  </section>
+<section class="hero">
+<div class="badge">📊 Pesquisa com 109 participantes</div>
+<h1>Estatísticas e ciência<br>por trás da água</h1>
+<p>Análise quantitativa dos hábitos de consumo hídrico + o funcionamento das Estações de Tratamento de Água (ETA).</p>
+<div class="stats">
+<div><b>109</b><span>Participantes</span></div>
+<div><b>6</b><span>Temas matemáticos</span></div>
+<div><b>7</b><span>Etapas da ETA</span></div>
+</div>
+</section>
 
-  <!-- ===================== MATEMÁTICA ===================== -->
-  <section id="matematica" class="section">
-    <div class="section-header">
-      <span class="tag">Seção 01</span>
-      <h2>📐 Matemática</h2>
-      <p>Estatística descritiva e análise de dados da pesquisa sobre recursos hídricos e hábitos de consumo.</p>
-    </div>
+<!-- ========== MATEMÁTICA ========== -->
+<section id="matematica">
+<div class="sec-head">
+<div class="tag">Seção 01</div>
+<h2>📐 Matemática</h2>
+<p>Estatística descritiva da pesquisa sobre consumo e desperdício de água.</p>
+</div>
+<div class="grid">
 
-    <div class="cards-grid">
+<article class="card reveal">
+<div class="card-h"><div class="icon b">🚿</div><div><h3>Tempo diário no chuveiro</h3><div class="sub">n = 109 · Meta OMS: ≤ 5 minutos</div></div></div>
+<div class="split">
+<div>
+<p>Padrão preocupante: <span class="hl">58,7%</span> ultrapassam 10 minutos diários (33% entre 10-15 min e 25,7% acima de 15 min). Apenas <span class="hl">10,1%</span> cumprem a meta de até 5 minutos da OMS.</p>
+<div class="bars">
+<div class="bar"><div class="bar-l"><span>≤ 5 min</span><span>10,1%</span></div><div class="track"><div class="fill g" style="width:10.1%"></div></div></div>
+<div class="bar"><div class="bar-l"><span>5–10 min</span><span>31,2%</span></div><div class="track"><div class="fill b" style="width:31.2%"></div></div></div>
+<div class="bar"><div class="bar-l"><span>10–15 min</span><span>33,0%</span></div><div class="track"><div class="fill a" style="width:33%"></div></div></div>
+<div class="bar"><div class="bar-l"><span>> 15 min</span><span>25,7%</span></div><div class="track"><div class="fill r" style="width:25.7%"></div></div></div>
+</div>
+</div>
+<div class="chart"><canvas id="c1"></canvas></div>
+</div>
+<div class="alert"><strong>Impacto:</strong> Banho de 15 min consome 135–180 L de água tratada. Hábitos prolongados sobrecarregam reservatórios e agravam crises hídricas.</div>
+</article>
 
-      <!-- CARD 1: Tempo de banho -->
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon blue">🚿</div>
-          <div>
-            <h3>Tempo diário no chuveiro</h3>
-            <div class="subtitle">n = 109 · Recomendação OMS: ≤ 5 minutos</div>
-          </div>
-        </div>
+<article class="card reveal">
+<div class="card-h"><div class="icon a">🚰</div><div><h3>Conhecimento sobre perdas na rede</h3><div class="sub">n = 109 · ~40% da água é perdida antes de chegar às casas</div></div></div>
+<div class="split">
+<div>
+<p><span class="hl">50,5%</span> desconheciam que cerca de 40% da água potável produzida no Brasil se perde em vazamentos e falhas de infraestrutura. Apenas <span class="hl">49,5%</span> sabiam.</p>
+<div class="info">O desconhecimento reduz a pressão pública por reformas e mascara a gravidade do problema sistêmico.</div>
+</div>
+<div class="chart"><canvas id="c2"></canvas></div>
+</div>
+</article>
 
-        <div class="split">
-          <div>
-            <p>
-              Constata-se um padrão preocupante de consumo hídrico residencial:
-              <span class="highlight">58,7%</span> dos entrevistados ultrapassam 10 minutos diários no chuveiro
-              (sendo <strong>33%</strong> entre 10 e 15 min e <strong>25,7%</strong> acima de 15 min),
-              enquanto apenas <span class="highlight">10,1%</span> cumprem a meta ideal de até 5 minutos recomendada pela OMS.
-            </p>
+<article class="card reveal">
+<div class="card-h"><div class="icon r">🔧</div><div><h3>Identificação de vazamentos</h3><div class="sub">n = 109 · Ambientes domésticos ou escolares</div></div></div>
+<div class="split">
+<div>
+<p><span class="hl">46,8%</span> identificaram e notificaram. <strong>33%</strong> nunca repararam e <strong>20,2%</strong> perceberam mas não avisaram → mais de <span class="hl">53%</span> de pontos cegos.</p>
+<div class="alert">Pequenos vazamentos podem desperdiçar milhares de litros por mês de forma silenciosa.</div>
+</div>
+<div class="chart"><canvas id="c3"></canvas></div>
+</div>
+</article>
 
-            <div class="bar-group">
-              <div class="bar-item">
-                <div class="bar-label"><span>≤ 5 min (ideal)</span><span>10,1%</span></div>
-                <div class="bar-track"><div class="bar-fill green" style="width: 10.1%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>5 – 10 min</span><span>31,2%</span></div>
-                <div class="bar-track"><div class="bar-fill blue" style="width: 31.2%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>10 – 15 min</span><span>33,0%</span></div>
-                <div class="bar-track"><div class="bar-fill amber" style="width: 33%"></div></div>
-              </div>
-              <div class="bar-item">
-                <div class="bar-label"><span>> 15 min</span><span>25,7%</span></div>
-                <div class="bar-track"><div class="bar-fill red" style="width: 25.7%"></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chartBanho"></canvas>
-          </div>
-        </div>
+<article class="card reveal">
+<div class="card-h"><div class="icon p">🥩</div><div><h3>Consumo de carne bovina</h3><div class="sub">n = 109 · Pegada hídrica ≈ 15.000 L/kg</div></div></div>
+<div class="split">
+<div>
+<p><span class="hl">58,7%</span> consomem com frequência (40,4% 3–4×/semana + 18,3% diariamente). 28,4% 1–2× e apenas 12,8% raramente/nunca.</p>
+<div class="info">Cada kg de carne bovina exige cerca de <strong>15.000 litros</strong> de água. Alto consumo = grande pegada hídrica invisível.</div>
+</div>
+<div class="chart"><canvas id="c4"></canvas></div>
+</div>
+</article>
 
-        <div class="alert-box">
-          <strong>Impacto ambiental:</strong> Um banho de 15 minutos em chuveiro elétrico consome em média <strong>135 a 180 litros</strong> de água potável limpa e tratada. Se um quarto da população mantém esse hábito diariamente, milhões de litros de água tratada são descartados precocemente na rede de esgoto, sobrecarregando reservatórios em períodos de estiagem e agravando crises hídricas regionais.
-        </div>
-      </article>
+<article class="card reveal">
+<div class="card-h"><div class="icon c">🧴</div><div><h3>Descarte de óleo e medicamentos</h3><div class="sub">n = 109</div></div></div>
+<div class="split">
+<div>
+<p><span class="hl">46,8%</span> usam coleta seletiva. 33,9% lixo comum e 19,3% ralo/vaso → <span class="hl">53,2%</span> de práticas inadequadas.</p>
+<div class="alert">1 L de óleo contamina até <strong>25.000 L</strong> de água. Remédios no esgoto poluem rios e lençóis freáticos.</div>
+</div>
+<div class="chart"><canvas id="c5"></canvas></div>
+</div>
+</article>
 
-      <!-- CARD 2: Perdas na rede -->
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon amber">🚰</div>
-          <div>
-            <h3>Conhecimento sobre perdas na distribuição</h3>
-            <div class="subtitle">n = 109 · Cerca de 40% da água potável é perdida antes de chegar às residências</div>
-          </div>
-        </div>
+<article class="card reveal">
+<div class="card-h"><div class="icon g">🥗</div><div><h3>Perfil alimentar</h3><div class="sub">n = 109</div></div></div>
+<div class="split">
+<div>
+<p><span class="hl">76,1%</span> dieta equilibrada (grãos + carnes), 22,9% rica em carnes e apenas <span class="hl">1%</span> vegetariana → 99% dependem de proteína animal.</p>
+<div class="info">Produção animal exige muito mais água que vegetais e grãos → pegada hídrica oculta elevada.</div>
+</div>
+<div class="chart"><canvas id="c6"></canvas></div>
+</div>
+</article>
 
-        <div class="split">
-          <div>
-            <p>
-              A pesquisa revela um cenário de desinformação equilibrado e preocupante sobre o saneamento no país:
-              <span class="highlight">50,5%</span> dos entrevistados desconheciam que cerca de <strong>40%</strong> da água potável produzida no Brasil é perdida em vazamentos e falhas de infraestrutura antes de chegar às residências, enquanto apenas <span class="highlight">49,5%</span> tinham conhecimento desse dado.
-            </p>
-            <div class="info-box">
-              Esse desconhecimento geral reduz a conscientização coletiva sobre o desperdício sistêmico, dificultando a pressão pública por reformas de infraestrutura e mascarando a gravidade do problema hídrico nacional, que vai muito além das economias individuais no dia a dia.
-            </div>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chartPerdas"></canvas>
-          </div>
-        </div>
-      </article>
+<!-- SOLUÇÕES -->
+<article class="card reveal">
+<div class="card-h"><div class="icon g">✅</div><div><h3>Soluções + litros economizados + impactos</h3><div class="sub">Ações concretas com estimativas</div></div></div>
 
-      <!-- CARD 3: Vazamentos domésticos -->
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon red">🔧</div>
-          <div>
-            <h3>Identificação e notificação de vazamentos</h3>
-            <div class="subtitle">n = 109 · Ambientes domésticos ou escolares</div>
-          </div>
-        </div>
+<div style="margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+<h4 style="margin-bottom:8px">1. Reduzir tempo de banho</h4>
+<ul style="margin-left:18px;color:var(--muted);font-size:.94rem">
+<li>Meta 5–7 min · fechar chuveiro ao ensaboar · redutores de vazão</li>
+</ul>
+<div class="save"><strong>💧 Economia:</strong> 15→5 min = 90–120 L/banho · 32–43 mil L/ano por pessoa</div>
+<div class="impact"><strong>🌍 Impacto:</strong> Menos sobrecarga em reservatórios e ETAs. Conta de água e energia menores.</div>
+</div>
 
-        <div class="split">
-          <div>
-            <p>
-              <span class="highlight">46,8%</span> dos entrevistados já identificaram gotejamentos ou vazamentos e notificaram o problema, demonstrando proatividade e consciência ambiental em quase metade da amostragem.
-              Por outro lado, <strong>33%</strong> afirmaram que nunca repararam e <strong>20,2%</strong> perceberam a falha, mas não avisaram — somando mais de <span class="highlight">53%</span> de potenciais pontos cegos na identificação de desperdícios.
-            </p>
-            <div class="alert-box">
-              Embora haja uma parcela engajada na manutenção hídrica, a falta de atenção ou de engajamento da maioria ainda permite que pequenos vazamentos — capazes de desperdiçar milhares de litros de água potável por mês de forma silenciosa — passem despercebidos e continuem gerando prejuízos financeiros e ambientais.
-            </div>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chartVazamento"></canvas>
-          </div>
-        </div>
-      </article>
+<div style="margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+<h4 style="margin-bottom:8px">2. Combater perdas de 40%</h4>
+<ul style="margin-left:18px;color:var(--muted);font-size:.94rem">
+<li>Cobrar transparência das companhias · apoiar troca de redes · divulgar dados</li>
+</ul>
+<div class="save"><strong>💧 Potencial:</strong> Reduzir perdas de 40%→20% economizaria bilhões de litros/ano no Brasil</div>
+<div class="impact"><strong>🌍 Impacto:</strong> Maior segurança hídrica e menor necessidade de novas obras.</div>
+</div>
 
-      <!-- CARD 4: Consumo de carne -->
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon purple">🥩</div>
-          <div>
-            <h3>Frequência semanal de consumo de carne bovina</h3>
-            <div class="subtitle">n = 109 · Pegada hídrica ≈ 15.000 L por kg de carne</div>
-          </div>
-        </div>
+<div style="margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+<h4 style="margin-bottom:8px">3. Conserto de vazamentos</h4>
+<ul style="margin-left:18px;color:var(--muted);font-size:.94rem">
+<li>Inspecionar semanalmente · notificar síndico/escola · denunciar via app da companhia</li>
+</ul>
+<div class="save"><strong>💧 Economia:</strong> 1 gota/s ≈ 11.000 L/ano · descarga vazando ≈ 73.000 L/ano</div>
+<div class="impact"><strong>🌍 Impacto:</strong> Economia financeira + eliminação de desperdício silencioso.</div>
+</div>
 
-        <div class="split">
-          <div>
-            <p>
-              <span class="highlight">58,7%</span> dos entrevistados mantêm um consumo frequente
-              (sendo <strong>40,4%</strong> entre 3 a 4 vezes por semana e <strong>18,3%</strong> todos os dias),
-              enquanto <strong>28,4%</strong> consomem de 1 a 2 vezes e apenas <span class="highlight">12,8%</span> afirmam comer raramente ou nunca.
-            </p>
-            <div class="info-box">
-              A pecuária bovina é uma das atividades que mais demandam água no setor agropecuário — exigindo cerca de <strong>15.000 litros</strong> para cada quilo de carne produzido. A alta adesão ao consumo frequente demonstra que grande parte da população consome indiretamente volumes massivos de recursos hídricos na sua dieta diária, muitas vezes sem associar a alimentação ao impacto hídrico global.
-            </div>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chartCarne"></canvas>
-          </div>
-        </div>
-      </article>
+<div style="margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+<h4 style="margin-bottom:8px">4. Reduzir pegada hídrica alimentar</h4>
+<ul style="margin-left:18px;color:var(--muted);font-size:.94rem">
+<li>Menos carne bovina · “segunda sem carne” · mais leguminosas</li>
+</ul>
+<div class="save"><strong>💧 Economia:</strong> −1 kg carne/semana ≈ 15.000 L · ≈ 780.000 L/ano por pessoa</div>
+<div class="impact"><strong>🌍 Impacto:</strong> Menor pressão sobre rios e aquíferos usados na pecuária.</div>
+</div>
 
-      <!-- CARD 5: Descarte de resíduos -->
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon cyan">🧴</div>
-          <div>
-            <h3>Destinação de resíduos poluentes</h3>
-            <div class="subtitle">n = 109 · Óleo de cozinha e medicamentos vencidos</div>
-          </div>
-        </div>
+<div>
+<h4 style="margin-bottom:8px">5. Descarte correto de óleo e medicamentos</h4>
+<ul style="margin-left:18px;color:var(--muted);font-size:.94rem">
+<li>Óleo em garrafa PET → coleta seletiva · remédios em farmácias/postos</li>
+</ul>
+<div class="save"><strong>💧 Proteção:</strong> 1 L óleo evita contaminação de até 25.000 L · família pode proteger >1 milhão L/ano</div>
+<div class="impact"><strong>🌍 Impacto:</strong> Protege rios, evita entupimentos e reduz carga nas ETAs.</div>
+</div>
 
-        <div class="split">
-          <div>
-            <p>
-              <span class="highlight">46,8%</span> dos entrevistados utilizam pontos de coleta seletiva para o descarte adequado,
-              enquanto <strong>33,9%</strong> optam pelo lixo comum e <strong>19,3%</strong> descartam diretamente no ralo da pia ou no vaso sanitário.
-              A soma das práticas inadequadas representa <span class="highlight">53,2%</span> dos entrevistados — um número alarmante para a preservação dos recursos hídricos.
-            </p>
-            <div class="alert-box">
-              Apenas <strong>1 litro de óleo</strong> despejado no esgoto pode contaminar até <strong>25 mil litros</strong> de água, além de entupir tubulações. Já o descarte de remédios no lixo ou na rede hídrica lança substâncias químicas no ecossistema que as estações convencionais de tratamento não conseguem filtrar, poluindo rios, lençóis freáticos e ameaçando a vida aquática.
-            </div>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chartDescarte"></canvas>
-          </div>
-        </div>
-      </article>
+<div class="conc" style="margin-top:24px"><strong>Resumo:</strong> Pequenas mudanças individuais (banho + vazamentos + dieta + descarte) + cobrança por infraestrutura geram impacto coletivo de milhões de litros.</div>
+</article>
+</div>
+</section>
 
-      <!-- CARD 6: Perfil alimentar -->
-      <article class="card reveal">
-        <div class="card-header">
-          <div class="card-icon green">🥗</div>
-          <div>
-            <h3>Perfil da base alimentar diária</h3>
-            <div class="subtitle">n = 109 · Dependência de proteína animal e pegada hídrica oculta</div>
-          </div>
-        </div>
+<!-- ========== QUÍMICA ========== -->
+<section id="quimica">
+<div class="sec-head">
+<div class="tag">Seção 02</div>
+<h2>🧪 Química</h2>
+<p>Conteúdo em desenvolvimento.</p>
+</div>
+<div class="empty reveal">
+<div class="big">🧪</div>
+<h3>Em breve</h3>
+<p>Jogos interativos e conteúdos de Química da água (coagulação, reagentes, pH...).</p>
+</div>
+</section>
 
-        <div class="split">
-          <div>
-            <p>
-              A esmagadora maioria adota dietas com presença de proteína animal:
-              <span class="highlight">76,1%</span> consideram sua alimentação equilibrada (grãos e carnes),
-              <strong>22,9%</strong> indicam uma dieta predominantemente rica em carnes (frango, boi)
-              e apenas <span class="highlight">1%</span> declara seguir uma dieta vegetariana.
-            </p>
-            <div class="info-box">
-              Sob a perspectiva da sustentabilidade e dos recursos hídricos, essa dependência generalizada de proteína animal por <strong>99%</strong> dos entrevistados representa uma expressiva “pegada hídrica oculta”, visto que a produção de alimentos de origem animal exige volumes significativamente maiores de água para o manejo do solo, cultivo de ração e criação do gado em comparação ao cultivo direto de vegetais e grãos para consumo humano.
-            </div>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chartDieta"></canvas>
-          </div>
-        </div>
-      </article>
+<!-- ========== BIOLOGIA ========== -->
+<section id="biologia">
+<div class="sec-head">
+<div class="tag">Seção 03</div>
+<h2>🧬 Biologia</h2>
+<p>Estações de Tratamento de Água (ETA) — tecnologias, etapas e padrões de potabilidade (Portaria GM/MS nº 888/2021).</p>
+</div>
+<div class="grid">
 
-    </div>
-  </section>
+<article class="card reveal">
+<div class="card-h"><div class="icon t">🚰</div><div><h3>O que é uma ETA?</h3><div class="sub">Barreira de proteção à saúde pública</div></div></div>
+<p>A água de rios, lagos e represas raramente está pronta para consumo. Ela contém microrganismos, matéria orgânica, sedimentos e substâncias químicas. A <strong>Estação de Tratamento de Água (ETA)</strong> transforma essa água bruta em água potável, atendendo aos padrões da Portaria GM/MS nº 888/2021.</p>
+</article>
 
-  <!-- ===================== QUÍMICA ===================== -->
-  <section id="quimica" class="section">
-    <div class="section-header">
-      <span class="tag">Seção 02</span>
-      <h2>🧪 Química</h2>
-      <p>Conteúdo em desenvolvimento.</p>
-    </div>
-    <div class="empty-section reveal">
-      <div class="icon">🧪</div>
-      <h3>Em breve</h3>
-      <p>Esta seção será preenchida com conteúdos de Química relacionados a recursos hídricos, poluição e tratamento de água.</p>
-    </div>
-  </section>
+<article class="card reveal">
+<div class="card-h"><div class="icon b">🔬</div><div><h3>As 7 etapas do tratamento convencional</h3><div class="sub">Fluxograma visual + ilustração de cada fase</div></div></div>
 
-  <!-- ===================== BIOLOGIA ===================== -->
-  <section id="biologia" class="section">
-    <div class="section-header">
-      <span class="tag">Seção 03</span>
-      <h2>🧬 Biologia</h2>
-      <p>Conteúdo em desenvolvimento.</p>
-    </div>
-    <div class="empty-section reveal">
-      <div class="icon">🧬</div>
-      <h3>Em breve</h3>
-      <p>Esta seção será preenchida com conteúdos de Biologia relacionados a ecossistemas aquáticos, biodiversidade e impactos ambientais.</p>
-    </div>
-  </section>
+<div class="flow">
+<div class="flow-t">🔄 Fluxograma da ETA</div>
+<div class="flow-s">
+<div class="fs"><div class="n">1</div><div class="em">🏞️</div><div class="lb">Captação e Gradeamento</div></div>
+<div class="arr">→</div>
+<div class="fs"><div class="n">2</div><div class="em">⚗️</div><div class="lb">Coagulação</div></div>
+<div class="arr">→</div>
+<div class="fs"><div class="n">3</div><div class="em">🌀</div><div class="lb">Floculação</div></div>
+<div class="arr">→</div>
+<div class="fs"><div class="n">4</div><div class="em">⬇️</div><div class="lb">Decantação</div></div>
+<div class="arr">→</div>
+<div class="fs"><div class="n">5</div><div class="em">🧱</div><div class="lb">Filtração</div></div>
+<div class="arr">→</div>
+<div class="fs"><div class="n">6</div><div class="em">🧴</div><div class="lb">Desinfecção</div></div>
+<div class="arr">→</div>
+<div class="fs"><div class="n">7</div><div class="em">⚖️</div><div class="lb">pH + Flúor</div></div>
+</div>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>
-      Dados baseados em pesquisa com <strong>109 participantes</strong> · Site desenvolvido para fins educacionais<br />
-      Pronto para publicação no <a href="https://github.com" target="_blank" rel="noopener">GitHub Pages</a>
-    </p>
-  </footer>
+<!-- Etapa 1 -->
+<div class="step">
+<div class="step-vis"><div class="n">1</div><div class="em">🏞️</div><div class="lb">Captação</div></div>
+<div>
+<h4><span class="bd">1</span> Captação e Gradeamento</h4>
+<ul>
+<li>Água é retirada do manancial (rio, lago ou represas) por bombas.</li>
+<li>Passa por grades e desarenadores que retêm galhos, folhas, plásticos e areia.</li>
+<li>Protege os equipamentos da ETA contra danos e entupimentos.</li>
+</ul>
+</div>
+</div>
 
-  <script>
-    // ===== Charts =====
-    const chartDefaults = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            padding: 16,
-            usePointStyle: true,
-            pointStyle: 'circle',
-            font: { family: 'Inter', size: 12 }
-          }
-        },
-        tooltip: {
-          backgroundColor: '#1a1f36',
-          titleFont: { family: 'Inter', size: 13 },
-          bodyFont: { family: 'Inter', size: 12 },
-          padding: 12,
-          cornerRadius: 8
-        }
-      }
-    };
+<!-- Etapa 2 -->
+<div class="step">
+<div class="step-vis"><div class="n">2</div><div class="em">⚗️</div><div class="lb">Coagulação</div></div>
+<div>
+<h4><span class="bd">2</span> Coagulação (mistura rápida)</h4>
+<ul>
+<li>Adiciona-se coagulante: sulfato de alumínio (Al₂(SO₄)₃) ou cloreto férrico.</li>
+<li>Neutraliza as cargas negativas das partículas coloidais.</li>
+<li>Ocorre em segundos, com agitação intensa (Calha Parshall).</li>
+</ul>
+</div>
+</div>
 
-    // 1. Banho
-    new Chart(document.getElementById('chartBanho'), {
-      type: 'doughnut',
-      data: {
-        labels: ['≤ 5 min', '5–10 min', '10–15 min', '> 15 min'],
-        datasets: [{
-          data: [10.1, 31.2, 33.0, 25.7],
-          backgroundColor: ['#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
-          borderWidth: 0,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
-    });
+<!-- Etapa 3 -->
+<div class="step">
+<div class="step-vis"><div class="n">3</div><div class="em">🌀</div><div class="lb">Floculação</div></div>
+<div>
+<h4><span class="bd">3</span> Floculação (mistura lenta)</h4>
+<ul>
+<li>Agitação suave faz as partículas se chocarem e formarem “flocos” maiores e mais pesados.</li>
+<li>Tempo típico: 20–40 minutos.</li>
+<li>Prepara a água para a sedimentação.</li>
+</ul>
+</div>
+</div>
 
-    // 2. Perdas
-    new Chart(document.getElementById('chartPerdas'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Desconheciam (50,5%)', 'Conheciam (49,5%)'],
-        datasets: [{
-          data: [50.5, 49.5],
-          backgroundColor: ['#f59e0b', '#0ea5e9'],
-          borderWidth: 0,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
-    });
+<!-- Etapa 4 -->
+<div class="step">
+<div class="step-vis"><div class="n">4</div><div class="em">⬇️</div><div class="lb">Decantação</div></div>
+<div>
+<h4><span class="bd">4</span> Decantação / Sedimentação</h4>
+<ul>
+<li>Água flui lentamente. Os flocos pesados depositam-se no fundo (lodo).</li>
+<li>Alternativa: flotação por ar dissolvido (FAD) para águas com algas.</li>
+<li>Remove a maior parte dos sólidos em suspensão.</li>
+</ul>
+</div>
+</div>
 
-    // 3. Vazamentos
-    new Chart(document.getElementById('chartVazamento'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Identificou e notificou', 'Nunca reparou', 'Percebeu, mas não avisou'],
-        datasets: [{
-          data: [46.8, 33.0, 20.2],
-          backgroundColor: ['#10b981', '#94a3b8', '#ef4444'],
-          borderWidth: 0,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
-    });
+<!-- Etapa 5 -->
+<div class="step">
+<div class="step-vis"><div class="n">5</div><div class="em">🧱</div><div class="lb">Filtração</div></div>
+<div>
+<h4><span class="bd">5</span> Filtração</h4>
+<ul>
+<li>Água passa por camadas de antracito, areia e cascalho.</li>
+<li>Retém os flocos finos que não sedimentaram.</li>
+<li>Reduz drasticamente a turbidez (meta < 0,5 uT).</li>
+</ul>
+</div>
+</div>
 
-    // 4. Carne
-    new Chart(document.getElementById('chartCarne'), {
-      type: 'doughnut',
-      data: {
-        labels: ['3–4×/semana', 'Todos os dias', '1–2×/semana', 'Raramente/nunca'],
-        datasets: [{
-          data: [40.4, 18.3, 28.4, 12.8],
-          backgroundColor: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
-          borderWidth: 0,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
-    });
+<!-- Etapa 6 -->
+<div class="step">
+<div class="step-vis"><div class="n">6</div><div class="em">🧴</div><div class="lb">Desinfecção</div></div>
+<div>
+<h4><span class="bd">6</span> Desinfecção (Cloração)</h4>
+<ul>
+<li>Adição de cloro (gás ou hipoclorito) para eliminar bactérias, vírus e protozoários.</li>
+<li>Mantém residual de cloro (0,2–2,0 mg/L) na rede de distribuição.</li>
+<li>Protege contra cólera, tifo e hepatite A.</li>
+</ul>
+</div>
+</div>
 
-    // 5. Descarte
-    new Chart(document.getElementById('chartDescarte'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Coleta seletiva', 'Lixo comum', 'Ralo / vaso'],
-        datasets: [{
-          data: [46.8, 33.9, 19.3],
-          backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'],
-          borderWidth: 0,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
-    });
+<!-- Etapa 7 -->
+<div class="step">
+<div class="step-vis"><div class="n">7</div><div class="em">⚖️</div><div class="lb">pH + Flúor</div></div>
+<div>
+<h4><span class="bd">7</span> Correção de pH e Fluoretação</h4>
+<ul>
+<li>Cal ou soda ajustam o pH (ideal 6,0–9,5) para evitar corrosão ou incrustações.</li>
+<li>Fluoretação (fluossilicato) contribui para a prevenção de cáries.</li>
+<li>Água pronta para distribuição.</li>
+</ul>
+</div>
+</div>
+</article>
 
-    // 6. Dieta
-    new Chart(document.getElementById('chartDieta'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Equilibrada (grãos + carnes)', 'Rica em carnes', 'Vegetariana'],
-        datasets: [{
-          data: [76.1, 22.9, 1.0],
-          backgroundColor: ['#10b981', '#f59e0b', '#34d399'],
-          borderWidth: 0,
-          hoverOffset: 8
-        }]
-      },
-      options: {
-        ...chartDefaults,
-        cutout: '62%'
-      }
-    });
+<article class="card reveal">
+<div class="card-h"><div class="icon a">⚡</div><div><h3>Desafios contemporâneos das ETAs</h3><div class="sub">Principais dificuldades operacionais</div></div></div>
+<table class="tbl">
+<thead><tr><th>Desafio</th><th>Causa</th><th>Consequência</th></tr></thead>
+<tbody>
+<tr><td><strong>Degradação de mananciais</strong></td><td>Esgoto, agrotóxicos, efluentes industriais</td><td>Maior dosagem de químicos e custos</td></tr>
+<tr><td><strong>Poluentes emergentes</strong></td><td>Medicamentos, microplásticos, hormônios</td><td>ETAs convencionais não removem totalmente</td></tr>
+<tr><td><strong>Perdas na distribuição</strong></td><td>Redes antigas e vazamentos</td><td>~40% da água tratada se perde</td></tr>
+<tr><td><strong>Custo energético</strong></td><td>Bombas + preço de reagentes</td><td>Impacto nas tarifas</td></tr>
+</tbody>
+</table>
+</article>
 
-    // ===== Reveal on scroll =====
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.12 });
+<article class="card reveal">
+<div class="card-h"><div class="icon g">📊</div><div><h3>Padrões de potabilidade (Portaria 888)</h3><div class="sub">Limites que a água deve atender</div></div></div>
+<div class="sg">
+<div class="sc"><div class="v">&lt; 0,5 uT</div><div class="n">Turbidez</div><div class="d">Após filtração</div></div>
+<div class="sc"><div class="v">6,0 – 9,5</div><div class="n">pH</div><div class="d">Faixa ideal</div></div>
+<div class="sc"><div class="v">0,2 – 2,0 mg/L</div><div class="n">Cloro residual</div><div class="d">Na rede</div></div>
+<div class="sc"><div class="v">Ausente</div><div class="n">E. coli</div><div class="d">Em 100 mL</div></div>
+</div>
+<div class="conc"><strong>Conclusão:</strong> A ETA é a principal barreira sanitária entre a água da natureza e a torneira. Preservar mananciais e reduzir perdas na rede são essenciais para que todo o esforço tecnológico não seja desperdiçado.</div>
+</article>
+</div>
+</section>
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+<footer>
+<p>Dados da pesquisa com <strong>109 participantes</strong> · Conteúdo educacional · Pronto para GitHub Pages</p>
+</footer>
 
-    // ===== Active nav link =====
-    const sections = document.querySelectorAll('section[id]');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const top = section.offsetTop - 100;
-        if (scrollY >= top) current = section.getAttribute('id');
-      });
-      document.querySelectorAll('nav a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
-    });
-  </script>
+<script>
+const opt={responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyle:'circle',font:{size:11}}},tooltip:{callbacks:{label:c=>' '+c.label}}}};
+new Chart(document.getElementById('c1'),{type:'doughnut',data:{labels:['≤5 min — 10,1%','5–10 min — 31,2%','10–15 min — 33%','>15 min — 25,7%'],datasets:[{data:[10.1,31.2,33,25.7],backgroundColor:['#10b981','#0ea5e9','#f59e0b','#ef4444'],borderWidth:0}]},options:{...opt,cutout:'58%'}});
+new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:['Desconheciam — 50,5%','Conheciam — 49,5%'],datasets:[{data:[50.5,49.5],backgroundColor:['#f59e0b','#0ea5e9'],borderWidth:0}]},options:{...opt,cutout:'58%'}});
+new Chart(document.getElementById('c3'),{type:'doughnut',data:{labels:['Notificou — 46,8%','Nunca viu — 33%','Viu e não avisou — 20,2%'],datasets:[{data:[46.8,33,20.2],backgroundColor:['#10b981','#94a3b8','#ef4444'],borderWidth:0}]},options:{...opt,cutout:'58%'}});
+new Chart(document.getElementById('c4'),{type:'doughnut',data:{labels:['3–4×/sem — 40,4%','Diário — 18,3%','1–2×/sem — 28,4%','Raro — 12,8%'],datasets:[{data:[40.4,18.3,28.4,12.8],backgroundColor:['#8b5cf6','#a78bfa','#c4b5fd','#ddd6fe'],borderWidth:0}]},options:{...opt,cutout:'58%'}});
+new Chart(document.getElementById('c5'),{type:'doughnut',data:{labels:['Coleta seletiva — 46,8%','Lixo comum — 33,9%','Ralo/vaso — 19,3%'],datasets:[{data:[46.8,33.9,19.3],backgroundColor:['#06b6d4','#f59e0b','#ef4444'],borderWidth:0}]},options:{...opt,cutout:'58%'}});
+new Chart(document.getElementById('c6'),{type:'doughnut',data:{labels:['Equilibrada — 76,1%','Rica em carnes — 22,9%','Vegetariana — 1%'],datasets:[{data:[76.1,22.9,1],backgroundColor:['#10b981','#f59e0b','#34d399'],borderWidth:0}]},options:{...opt,cutout:'58%'}});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+window.addEventListener('scroll',()=>{let c='';document.querySelectorAll('section[id]').forEach(s=>{if(scrollY>=s.offsetTop-90)c=s.id});document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+c))});
+</script>
 </body>
 </html>
