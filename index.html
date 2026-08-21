@@ -180,7 +180,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </article>
 
-<!-- SOLUÇÕES -->
 <article class="card reveal">
 <div class="card-h"><div class="icon g">✅</div><div><h3>Soluções + litros economizados + impactos</h3><div class="sub">Ações concretas com estimativas</div></div></div>
 
@@ -244,6 +243,7 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 
   <div class="grid">
 
+    <!-- Introdução -->
     <article class="card reveal">
       <div class="card-h">
         <div class="icon b">⚗️</div>
@@ -264,6 +264,7 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
       </div>
     </article>
 
+    <!-- Tabela de reagentes -->
     <article class="card reveal">
       <div class="card-h">
         <div class="icon a">🧪</div>
@@ -313,7 +314,90 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
       </div>
     </article>
 
-    <!-- JOGO INTERATIVO -->
+    <!-- Etapas detalhadas -->
+    <article class="card reveal">
+      <div class="card-h">
+        <div class="icon t">🔬</div>
+        <div>
+          <h3>As etapas químicas explicadas</h3>
+          <div class="sub">Compostos, reações e o que acontece em cada fase</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-vis"><div class="n">1</div><div class="em">⚗️</div><div class="lb">Coagulação</div></div>
+        <div>
+          <h4><span class="bd">1</span> Coagulação (mistura rápida)</h4>
+          <ul>
+            <li>Adição de <strong>Sulfato de Alumínio Al₂(SO₄)₃</strong> ou <strong>Cloreto Férrico FeCl₃</strong>.</li>
+            <li>O coagulante hidrolisa e gera espécies positivas que neutralizam a carga negativa das partículas coloidais.</li>
+            <li>Ocorre em segundos, com agitação intensa (Calha Parshall).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-vis"><div class="n">2</div><div class="em">🌀</div><div class="lb">Floculação</div></div>
+        <div>
+          <h4><span class="bd">2</span> Floculação (mistura lenta)</h4>
+          <ul>
+            <li>Agitação suave (gradiente de velocidade G entre 20–70 s⁻¹).</li>
+            <li>As partículas neutralizadas se chocam e formam <strong>flocos</strong> maiores e mais pesados.</li>
+            <li>Tempo típico: 20–40 minutos.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-vis"><div class="n">3</div><div class="em">⬇️</div><div class="lb">Decantação</div></div>
+        <div>
+          <h4><span class="bd">3</span> Decantação / Sedimentação</h4>
+          <ul>
+            <li>Os flocos pesados descem por gravidade (Lei de Stokes).</li>
+            <li>A água clarificada sobe.</li>
+            <li>Tempo de detenção típico: 1,5 a 3 horas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-vis"><div class="n">4</div><div class="em">🧱</div><div class="lb">Filtração</div></div>
+        <div>
+          <h4><span class="bd">4</span> Filtração</h4>
+          <ul>
+            <li>Passagem por leito de <strong>antracito + areia + cascalho</strong>.</li>
+            <li>Retém os flocos finos que não sedimentaram.</li>
+            <li>Reduz a turbidez para &lt; 0,5 uT.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-vis"><div class="n">5</div><div class="em">🧴</div><div class="lb">Desinfecção</div></div>
+        <div>
+          <h4><span class="bd">5</span> Desinfecção</h4>
+          <ul>
+            <li>Adição de <strong>Cloro (Cl₂)</strong> ou <strong>Hipoclorito de Sódio (NaClO)</strong>.</li>
+            <li>Forma-se o <strong>ácido hipocloroso (HOCl)</strong> — o verdadeiro agente desinfetante.</li>
+            <li>Residual de cloro livre na rede: 0,2–2,0 mg/L.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-vis"><div class="n">6</div><div class="em">⚖️</div><div class="lb">pH + Flúor</div></div>
+        <div>
+          <h4><span class="bd">6</span> Correção de pH + Fluoretação</h4>
+          <ul>
+            <li><strong>Cal hidratada Ca(OH)₂</strong> ou soda ajustam o pH para a faixa 6,0–9,5.</li>
+            <li><strong>Fluossilicato de sódio Na₂SiF₆</strong> adiciona flúor (0,6–0,8 mg/L) para prevenção de cáries.</li>
+            <li>Água pronta para distribuição.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- JOGO -->
     <article class="card reveal" style="padding: 0; overflow: hidden;">
       <div style="padding: 28px 28px 18px 28px;">
         <div class="card-h">
@@ -762,7 +846,7 @@ window.addEventListener('scroll',()=>{let c='';document.querySelectorAll('sectio
       particles.push({
         x: Math.random() * 700 + 50, y: Math.random() * 200 + 60,
         vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
-         size: 2, type: 'clean', life: 1
+        size: 2, type: 'clean', life: 1
       });
     }
     render();
