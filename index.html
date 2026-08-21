@@ -6,7 +6,7 @@
 <title>Água & Consciência | Matemática • Química • Biologia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Press+Start+2P&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 :root{--bg:#fafbfc;--surface:#fff;--text:#1a1f36;--muted:#5a6477;--accent:#0ea5e9;--accent-d:#0284c7;--soft:#e0f2fe;--ok:#10b981;--warn:#f59e0b;--bad:#ef4444;--border:#e5e7eb;--shadow:0 4px 24px rgba(14,165,233,.08);--radius:16px}
@@ -236,16 +236,132 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 
 <!-- ========== QUÍMICA ========== -->
 <section id="quimica">
-<div class="sec-head">
-<div class="tag">Seção 02</div>
-<h2>🧪 Química</h2>
-<p>Conteúdo em desenvolvimento.</p>
-</div>
-<div class="empty reveal">
-<div class="big">🧪</div>
-<h3>Em breve</h3>
-<p>Jogos interativos e conteúdos de Química da água (coagulação, reagentes, pH...).</p>
-</div>
+  <div class="sec-head">
+    <div class="tag">Seção 02</div>
+    <h2>🧪 Química</h2>
+    <p>A ciência por trás do tratamento da água — reagentes, reações e o jogo interativo da ETA.</p>
+  </div>
+
+  <div class="grid">
+
+    <article class="card reveal">
+      <div class="card-h">
+        <div class="icon b">⚗️</div>
+        <div>
+          <h3>Química da Estação de Tratamento de Água (ETA)</h3>
+          <div class="sub">Reações e reagentes que transformam água bruta em água potável</div>
+        </div>
+      </div>
+      <p>
+        O tratamento de água é, em grande parte, um processo químico. As partículas de sujeira, argila e matéria orgânica presentes na água bruta possuem <strong>carga elétrica negativa</strong>. Por isso elas se repelem e ficam em suspensão (não sedimentam sozinhas). A química resolve esse problema.
+      </p>
+      <div class="info" style="margin-top:16px">
+        <strong>Principais etapas químicas:</strong><br>
+        1. <strong>Coagulação</strong> → Neutralização das cargas<br>
+        2. <strong>Floculação</strong> → Formação de flocos<br>
+        3. <strong>Desinfecção</strong> → Eliminação de microrganismos<br>
+        4. <strong>Correção de pH + Fluoretação</strong> → Ajuste final
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-h">
+        <div class="icon a">🧪</div>
+        <div>
+          <h3>Reagentes mais usados</h3>
+          <div class="sub">Os “ingredientes” químicos da ETA</div>
+        </div>
+      </div>
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Reagente</th>
+            <th>Fórmula</th>
+            <th>Função</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sulfato de Alumínio</strong></td>
+            <td>Al₂(SO₄)₃</td>
+            <td>Coagulante principal (mais usado no Brasil)</td>
+          </tr>
+          <tr>
+            <td><strong>Cloreto Férrico</strong></td>
+            <td>FeCl₃</td>
+            <td>Coagulante alternativo (bom em águas frias)</td>
+          </tr>
+          <tr>
+            <td><strong>Cal hidratada</strong></td>
+            <td>Ca(OH)₂</td>
+            <td>Ajuste de pH e auxiliar de coagulação</td>
+          </tr>
+          <tr>
+            <td><strong>Cloro / Hipoclorito</strong></td>
+            <td>Cl₂ / NaClO</td>
+            <td>Desinfecção (forma HOCl – ácido hipocloroso)</td>
+          </tr>
+          <tr>
+            <td><strong>Fluossilicato de sódio</strong></td>
+            <td>Na₂SiF₆</td>
+            <td>Fluoretação (prevenção de cáries)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="conc" style="margin-top:18px">
+        <strong>Curiosidade química:</strong> O verdadeiro desinfetante não é o cloro em si, e sim o <strong>ácido hipocloroso (HOCl)</strong> formado quando o cloro reage com a água. Ele penetra nas células dos microrganismos e oxida suas enzimas.
+      </div>
+    </article>
+
+    <!-- JOGO INTERATIVO -->
+    <article class="card reveal" style="padding: 0; overflow: hidden;">
+      <div style="padding: 28px 28px 18px 28px;">
+        <div class="card-h">
+          <div class="icon c">🎮</div>
+          <div>
+            <h3>Jogo Interativo: Química da ETA</h3>
+            <div class="sub">Pixel Art • 6 etapas • Aprenda jogando</div>
+          </div>
+        </div>
+        <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 0;">
+          Escolha os reagentes e ações corretas em cada etapa do tratamento. Cada acerto melhora a qualidade da água. Errar polui de novo!
+        </p>
+      </div>
+
+      <div id="eta-game-container" style="background: #0a0a1a; padding: 16px 12px 24px; border-top: 1px solid var(--border);">
+        <div style="text-align: center; margin-bottom: 12px;">
+          <div style="font-family: 'Press Start 2P', monospace; font-size: 11px; color: #4a9eff; margin-bottom: 6px;">
+            ETA PIXEL CHEMISTRY
+          </div>
+          <div style="font-size: 12px; color: #88ccff;">
+            Pontos: <span id="score" style="color:#ffcc00; font-weight:700;">0</span> &nbsp;|&nbsp;
+            Qualidade: <span id="quality" style="color:#4aff8a; font-weight:700;">0</span>%
+          </div>
+          <div style="height: 10px; background: #1a2a3a; border: 2px solid #3a5a8a; margin: 10px auto; max-width: 320px; border-radius: 4px; overflow: hidden;">
+            <div id="progress-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #2a7a4a, #4aff8a); transition: width 0.3s;"></div>
+          </div>
+        </div>
+
+        <canvas id="game-canvas" width="800" height="320" style="display:block; margin:0 auto 16px; max-width:100%; border: 3px solid #4a9eff; background:#1a2a3a; image-rendering: pixelated; cursor:pointer;"></canvas>
+
+        <div style="max-width: 720px; margin: 0 auto; padding: 0 8px;">
+          <div id="stage-title" style="font-family: 'Press Start 2P', monospace; font-size: 11px; color: #ffcc00; margin-bottom: 10px; text-align:center;">
+            ETAPA 1: COAGULAÇÃO
+          </div>
+          <div id="stage-info" style="font-size: 13px; color: #c0d0e0; line-height: 1.55; margin-bottom: 14px; text-align: center;">
+            A água bruta chega turva com partículas em suspensão. Adicione o coagulante correto para neutralizar as cargas e iniciar a formação de flocos.
+          </div>
+
+          <div id="controls" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom: 14px;"></div>
+
+          <div id="status" style="font-size: 12px; padding: 10px 14px; background: #0a1a2a; border-left: 4px solid #4a9eff; color: #c0d0e0; border-radius: 0 8px 8px 0;">
+            Escolha o coagulante e a dosagem...
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
 </section>
 
 <!-- ========== BIOLOGIA ========== -->
@@ -284,7 +400,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </div>
 
-<!-- Etapa 1 -->
 <div class="step">
 <div class="step-vis"><div class="n">1</div><div class="em">🏞️</div><div class="lb">Captação</div></div>
 <div>
@@ -297,7 +412,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </div>
 
-<!-- Etapa 2 -->
 <div class="step">
 <div class="step-vis"><div class="n">2</div><div class="em">⚗️</div><div class="lb">Coagulação</div></div>
 <div>
@@ -310,7 +424,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </div>
 
-<!-- Etapa 3 -->
 <div class="step">
 <div class="step-vis"><div class="n">3</div><div class="em">🌀</div><div class="lb">Floculação</div></div>
 <div>
@@ -323,7 +436,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </div>
 
-<!-- Etapa 4 -->
 <div class="step">
 <div class="step-vis"><div class="n">4</div><div class="em">⬇️</div><div class="lb">Decantação</div></div>
 <div>
@@ -336,7 +448,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </div>
 
-<!-- Etapa 5 -->
 <div class="step">
 <div class="step-vis"><div class="n">5</div><div class="em">🧱</div><div class="lb">Filtração</div></div>
 <div>
@@ -349,7 +460,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </div>
 
-<!-- Etapa 6 -->
 <div class="step">
 <div class="step-vis"><div class="n">6</div><div class="em">🧴</div><div class="lb">Desinfecção</div></div>
 <div>
@@ -362,7 +472,6 @@ footer a{color:var(--accent-d);text-decoration:none;font-weight:500}
 </div>
 </div>
 
-<!-- Etapa 7 -->
 <div class="step">
 <div class="step-vis"><div class="n">7</div><div class="em">⚖️</div><div class="lb">pH + Flúor</div></div>
 <div>
@@ -417,6 +526,252 @@ new Chart(document.getElementById('c6'),{type:'doughnut',data:{labels:['Equilibr
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 window.addEventListener('scroll',()=>{let c='';document.querySelectorAll('section[id]').forEach(s=>{if(scrollY>=s.offsetTop-90)c=s.id});document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+c))});
+</script>
+
+<script>
+/* ========== JOGO ETA PIXEL CHEMISTRY ========== */
+(function() {
+  const canvas = document.getElementById('game-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+
+  let score = 0;
+  let quality = 0;
+  let currentStage = 0;
+  let particles = [];
+  let chemicals = [];
+  let animationId;
+
+  const COLORS = {
+    water: '#1a4a6a', dirty: '#3a2a1a', clean: '#2a8aaa',
+    veryClean: '#4accee', floc: '#8a6a4a', pipe: '#4a4a5a',
+    metal: '#6a7a8a', yellow: '#ccaa33'
+  };
+
+  const STAGES = [
+    {
+      title: 'ETAPA 1: COAGULAÇÃO',
+      info: 'Água bruta com partículas coloidais (carga negativa). Adicione o coagulante para neutralizar as cargas. O mais usado no Brasil é o Sulfato de Alumínio Al₂(SO₄)₃.',
+      tip: 'Dica: o coagulante hidrolisa e forma espécies positivas que atraem as partículas negativas.',
+      options: [
+        { text: 'Sulfato de Alumínio', correct: true, chem: 'Al₂(SO₄)₃', effect: 'neutraliza cargas' },
+        { text: 'Cloreto de Sódio', correct: false, chem: 'NaCl', effect: 'não coagula' },
+        { text: 'Ácido Sulfúrico', correct: false, chem: 'H₂SO₄', effect: 'só acidifica' },
+        { text: 'Nada', correct: false, chem: '-', effect: 'sem efeito' }
+      ]
+    },
+    {
+      title: 'ETAPA 2: FLOCULAÇÃO',
+      info: 'As partículas neutralizadas precisam se aglomerar formando flocos maiores. Controle a agitação: muito forte quebra os flocos, muito fraca não forma.',
+      tip: 'Gradiente de velocidade (G) ideal fica entre 20 e 70 s⁻¹.',
+      options: [
+        { text: 'Agitação Lenta', correct: true, chem: 'G = 20-70 s⁻¹', effect: 'flocos crescem' },
+        { text: 'Agitação Violenta', correct: false, chem: 'G > 100 s⁻¹', effect: 'quebra flocos' },
+        { text: 'Sem Agitação', correct: false, chem: 'G = 0', effect: 'sem contato' },
+        { text: 'Mais coagulante', correct: false, chem: 'excesso', effect: 'restabiliza' }
+      ]
+    },
+    {
+      title: 'ETAPA 3: DECANTÇÃO',
+      info: 'Os flocos pesados descem por gravidade. A água clarificada sobe. Tempo de detenção típico: 1,5 a 3 horas.',
+      tip: 'Lei de Stokes: partículas maiores sedimentam mais rápido.',
+      options: [
+        { text: 'Aguardar sedimentação', correct: true, chem: 'gravidade', effect: 'flocos descem' },
+        { text: 'Aumentar velocidade', correct: false, chem: 'turbulência', effect: 'arrasta flocos' },
+        { text: 'Adicionar cloro agora', correct: false, chem: 'Cl₂', effect: 'ainda cedo' },
+        { text: 'Filtrar direto', correct: false, chem: '-', effect: 'entope filtro' }
+      ]
+    },
+    {
+      title: 'ETAPA 4: FILTRAÇÃO',
+      info: 'A água passa por leito de areia + antracito. Remove os flocos restantes e partículas finas.',
+      tip: 'O antracito (mais leve) fica em cima da areia → filtração em profundidade.',
+      options: [
+        { text: 'Areia + Antracito', correct: true, chem: 'meios granulares', effect: 'retém sólidos' },
+        { text: 'Filtro de Algodão', correct: false, chem: 'fibra', effect: 'ineficiente' },
+        { text: 'Peneira grossa', correct: false, chem: '-', effect: 'passa tudo' },
+        { text: 'Só sedimentar mais', correct: false, chem: '-', effect: 'não remove finos' }
+      ]
+    },
+    {
+      title: 'ETAPA 5: DESINFECÇÃO',
+      info: 'Eliminar microrganismos. O cloro forma ácido hipocloroso (HOCl) — o verdadeiro desinfetante.',
+      tip: 'Residual de cloro livre ideal: 0,2–2,0 mg/L.',
+      options: [
+        { text: 'Cloro / Hipoclorito', correct: true, chem: 'HOCl', effect: 'mata bactérias' },
+        { text: 'Apenas UV', correct: false, chem: 'UV', effect: 'sem residual' },
+        { text: 'Só ozônio', correct: false, chem: 'O₃', effect: 'caro e sem residual' },
+        { text: 'Nada', correct: false, chem: '-', effect: 'risco sanitário' }
+      ]
+    },
+    {
+      title: 'ETAPA 6: pH + FLUORETAÇÃO',
+      info: 'Ajuste final do pH (6,0–9,5) e adição de flúor (0,6–0,8 mg/L) para saúde dental.',
+      tip: 'Cal ou soda elevam o pH. Fluossilicato adiciona o flúor.',
+      options: [
+        { text: 'Cal + Fluorsilicato', correct: true, chem: 'Ca(OH)₂ + F', effect: 'pH e flúor ok' },
+        { text: 'Ácido + muito flúor', correct: false, chem: 'excesso F', effect: 'fluorose' },
+        { text: 'Só água', correct: false, chem: '-', effect: 'pH inadequado' },
+        { text: 'Soda + zero flúor', correct: false, chem: 'NaOH', effect: 'sem proteção dental' }
+      ]
+    }
+  ];
+
+  function createParticles(count, type = 'dirty') {
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * 700 + 50,
+        y: Math.random() * 200 + 60,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.2,
+        size: type === 'floc' ? 6 + Math.random() * 8 : 2 + Math.random() * 3,
+        type, life: 1
+      });
+    }
+  }
+
+  function updateParticles() {
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 40 || p.x > 760) p.vx *= -1;
+      if (p.y < 50 || p.y > 270) p.vy *= -1;
+      if (currentStage === 1) { p.vx *= 0.98; p.vy *= 0.98; }
+      if (currentStage === 2) { p.vy += 0.05; if (p.y > 250) p.y = 250; }
+      if (currentStage >= 3) p.life -= 0.002;
+    });
+    particles = particles.filter(p => p.life > 0);
+  }
+
+  function drawPixelRect(x, y, w, h, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(w), Math.floor(h));
+  }
+
+  function drawTank() {
+    drawPixelRect(30, 40, 740, 250, '#0d1f2d');
+    drawPixelRect(40, 50, 720, 230, COLORS.water);
+    drawPixelRect(30, 40, 740, 8, COLORS.metal);
+    drawPixelRect(30, 282, 740, 8, COLORS.metal);
+    drawPixelRect(30, 40, 8, 250, COLORS.metal);
+    drawPixelRect(762, 40, 8, 250, COLORS.metal);
+    drawPixelRect(40, 50, 720, 6, '#3a7aaa');
+  }
+
+  function drawParticles() {
+    particles.forEach(p => {
+      let color = COLORS.dirty;
+      if (p.type === 'floc') color = COLORS.floc;
+      if (p.type === 'clean') color = COLORS.clean;
+      if (currentStage >= 4) color = COLORS.veryClean;
+      drawPixelRect(p.x, p.y, p.size, p.size, color);
+    });
+  }
+
+  function drawPipes() {
+    drawPixelRect(0, 100, 40, 20, COLORS.pipe);
+    drawPixelRect(10, 90, 20, 40, COLORS.pipe);
+    drawPixelRect(760, 180, 40, 20, COLORS.pipe);
+  }
+
+  function drawChemicals() {
+    chemicals.forEach(c => {
+      drawPixelRect(c.x, c.y, 8, 8, c.color);
+      c.y += 2; c.life--;
+    });
+    chemicals = chemicals.filter(c => c.life > 0);
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawTank(); drawPipes(); drawParticles(); drawChemicals();
+    updateParticles();
+    animationId = requestAnimationFrame(render);
+  }
+
+  function updateUI() {
+    const stage = STAGES[currentStage];
+    document.getElementById('stage-title').textContent = stage.title;
+    document.getElementById('stage-info').innerHTML = stage.info + `<br><br><span style="color:#88ccff">${stage.tip}</span>`;
+    const controls = document.getElementById('controls');
+    controls.innerHTML = '';
+    stage.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.textContent = opt.text;
+      btn.style.cssText = 'font-family:"Press Start 2P",monospace;font-size:9px;padding:10px 12px;background:#2a4a7a;color:#fff;border:3px solid #5a8aca;cursor:pointer;';
+      btn.onmouseover = () => btn.style.background = '#3a6aaa';
+      btn.onmouseout = () => btn.style.background = '#2a4a7a';
+      btn.onclick = () => chooseOption(opt);
+      controls.appendChild(btn);
+    });
+    document.getElementById('status').textContent = 'Escolha uma opção...';
+    document.getElementById('score').textContent = score;
+    document.getElementById('quality').textContent = quality;
+    document.getElementById('progress-bar').style.width = quality + '%';
+  }
+
+  function chooseOption(opt) {
+    const status = document.getElementById('status');
+    if (opt.correct) {
+      score += 100;
+      quality = Math.min(100, quality + 16);
+      status.innerHTML = `<span style="color:#4aff8a">✓ CORRETO!</span> ${opt.chem} → ${opt.effect}`;
+      status.style.borderColor = '#4aff8a';
+
+      if (currentStage === 0) {
+        createParticles(40, 'floc');
+        for (let i = 0; i < 15; i++) chemicals.push({ x: 100 + Math.random() * 200, y: 60, color: '#aaccff', life: 40 });
+      }
+      if (currentStage === 1) particles.forEach(p => { p.size += 3; p.type = 'floc'; });
+      if (currentStage === 2) particles.forEach(p => { p.vy = 1.5; });
+      if (currentStage >= 3) particles = particles.filter((_, i) => i % 3 !== 0);
+
+      setTimeout(() => {
+        currentStage++;
+        if (currentStage >= STAGES.length) endGame();
+        else updateUI();
+      }, 1500);
+    } else {
+      score = Math.max(0, score - 30);
+      quality = Math.max(0, quality - 8);
+      status.innerHTML = `<span style="color:#ff6666">✗ ERRADO!</span> ${opt.chem} → ${opt.effect}`;
+      status.style.borderColor = '#ff6666';
+      for (let i = 0; i < 10; i++) {
+        particles.push({
+          x: Math.random() * 700 + 50, y: Math.random() * 180 + 60,
+          vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2,
+          size: 3, type: 'dirty', life: 1
+        });
+      }
+    }
+    document.getElementById('score').textContent = score;
+    document.getElementById('quality').textContent = quality;
+    document.getElementById('progress-bar').style.width = quality + '%';
+  }
+
+  function endGame() {
+    cancelAnimationFrame(animationId);
+    document.getElementById('stage-title').textContent = 'TRATAMENTO CONCLUÍDO!';
+    document.getElementById('stage-info').innerHTML = `Parabéns! Você tratou a água com sucesso.<br><br><strong>Pontuação:</strong> ${score} &nbsp;|&nbsp; <strong>Qualidade:</strong> ${quality}%`;
+    document.getElementById('controls').innerHTML = `<button onclick="location.reload()" style="font-family:'Press Start 2P',monospace;font-size:9px;padding:12px 18px;background:#2a7a4a;color:#fff;border:3px solid #5aca8a;cursor:pointer;">JOGAR NOVAMENTE</button>`;
+    document.getElementById('status').textContent = 'ETA operando perfeitamente!';
+    document.getElementById('status').style.borderColor = '#4aff8a';
+    particles = [];
+    for (let i = 0; i < 30; i++) {
+      particles.push({
+        x: Math.random() * 700 + 50, y: Math.random() * 200 + 60,
+        vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+        size: 2, type: 'clean', life: 1
+      });
+    }
+    render();
+  }
+
+  createParticles(60, 'dirty');
+  updateUI();
+  render();
+})();
 </script>
 </body>
 </html>
